@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IIngridient 
+public interface ISelectable
 {
-    
+    void OnSelected(bool selected);
 }
