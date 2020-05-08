@@ -8,7 +8,6 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider))]
 public class Combiner : MonoBehaviour
 {
-    [SerializeField] private BoxCollider _combineCollider;
     [SerializeField] private List<IIngridient> _ingridients = new List<IIngridient>();
 
     private void OnTriggerEnter(Collider other)

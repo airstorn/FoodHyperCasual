@@ -1,13 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Ingridient;
 using UnityEngine;
 
 public abstract class IngridientZoneBase : MonoBehaviour, IIngridientZone
 {
-    [SerializeField] private GameObject _ingridientTemplate;
+    [SerializeField] private ISpawnable _ingridientTemplate;
     
-    public virtual void Interact()
+    public virtual void Spawn(ISpawnable spawnObject)
     {
-        
+        _ingridientTemplate  = Pool.Instance.GetObject(spawnObject);
+        _ingridientTemplate.Spawn(transform);
+    }
+
+    public bool IsSpawned()
+    {
+        return _ingridientTemplate != null;
     }
 }

@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Ingridient;
 using UnityEngine;
 
 public class DefaultIngridientZone : IngridientZoneBase
 {
-   [SerializeField] private GameObject _selfObject;
-   public override void Interact()
+   public override void Spawn(ISpawnable spawnObject)
    {
-      base.Interact();
+      base.Spawn(spawnObject);
    }
 }

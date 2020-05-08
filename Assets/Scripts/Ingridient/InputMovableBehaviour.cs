@@ -4,20 +4,11 @@ namespace Ingridient
 {
     public abstract class InputMovableBehaviour : MonoBehaviour, ISelectable
     {
-        [SerializeField] private DefaultIngridientZone _zone;
         protected Quaternion _rotation;
         protected Vector3 _position;
 
         protected Vector3 _originPos;
         protected Quaternion _originRot;
-        
-        protected virtual void Start()
-        {
-            _originPos = transform.position;
-            _originRot = transform.rotation;
-            _position = _originPos;
-            _rotation = _originRot;
-        }
         
         public virtual void OnSelected(bool selected)
         {

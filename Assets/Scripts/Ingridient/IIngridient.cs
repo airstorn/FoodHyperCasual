@@ -6,5 +6,6 @@ namespace Ingridient
     {
         void Place(Vector3 pos);
         float GetHeight();
+        ISpawnable GetSpawnable();
     }
 }
