@@ -24,14 +24,14 @@ namespace Ingridient
         }
         protected virtual void Move(Vector3 pos)
         {
-            _position = new Vector3(pos.x,pos.y, transform.position.z);  
+            Debug.Log(transform.name);
+            transform.position = new Vector3(pos.x,pos.y, transform.position.z);  
         }
         protected virtual void Update()
         {
-            transform.rotation = Quaternion.Lerp(transform.rotation,
-                _rotation, 10 * Time.deltaTime);
+            
 
-            transform.position = Vector3.Lerp(transform.position, _position, 20 * Time.deltaTime);
+            // transform.position = Vector3.Lerp(transform.position, _position, 20 * Time.deltaTime);
         }
     }
 }

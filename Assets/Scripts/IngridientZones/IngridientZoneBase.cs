@@ -9,7 +9,7 @@ public abstract class IngridientZoneBase : MonoBehaviour, IIngridientZone
     
     public virtual void Spawn(ISpawnable spawnObject)
     {
-        _ingridientTemplate  = Pool.Instance.GetObject(spawnObject);
+        _ingridientTemplate = spawnObject;
         _ingridientTemplate.Spawn(transform);
     }
 

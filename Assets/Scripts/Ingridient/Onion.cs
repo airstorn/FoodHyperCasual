@@ -50,6 +50,9 @@ public class Onion : InputMovableBehaviour, IIngridient, ISpawnable
         _originRot = origin.rotation;
         _position = _originPos;
         _rotation = _originRot;
+        
+        transform.position = _position;
+        transform.rotation = _rotation;
         gameObject.SetActive(true);
     }
 

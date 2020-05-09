@@ -6,6 +6,7 @@ using UnityEngine;
 public class InputHandler : MonoBehaviour
 {
     [SerializeField] private Camera _raycastCamera;
+    [SerializeField] private Transform _zOffset;
 
     public OnInputPressed InputPressedAction;
     public delegate void OnInputPressed(bool b);

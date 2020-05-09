@@ -16,9 +16,12 @@ public class Sauce : InputMovableBehaviour, ISpawnable
     {
         _originPos = origin.position;
         _originRot = origin.rotation;
+        _position = _originPos;
+        _rotation = _originRot;
 
-        transform.position = _originPos;
-        transform.rotation = _originRot;
+        transform.position = _position;
+        transform.rotation = _rotation;
+        gameObject.SetActive(true);
     }
 
     public void BackToPool()

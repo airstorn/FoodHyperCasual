@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using Ingridient;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -8,23 +10,27 @@ using Random = UnityEngine.Random;
 public class Spawner : MonoBehaviour
 {
    [SerializeField] private List<IngridientZoneBase> _spawnZones = new List<IngridientZoneBase>();
-   [SerializeField] private GameObject _bun;
+   [SerializeField] private GameObject[] objs;
+
    private void Start()
    {
-      var burger = new Burger(new List<IIngridient>(new []{ new Onion(), new Onion(), }));
-      SpawnElements(burger);
+      StartCoroutine(SpawnElements(objs.Select(el => Instantiate(el).GetComponent<ISpawnable>()).ToArray()));
    }
 
-   public void SpawnElements(Burger burger)
+   public IEnumerator SpawnElements(params ISpawnable[] ingridients)
    {
-      for (int i = 0; i < burger.Ingridients.Count; i++)
-      {
-         int spawnPoint = Random.Range(0, _spawnZones.Count);
-         while (_spawnZones[i].IsSpawned() == true)
+      for (int i = 0; i < ingridients.Length; i++)
+      { 
+         int spawnPoint = 0;
+         for (int j = 0; j < _spawnZones.Count; j++)
          {
-            spawnPoint = Random.Range(0, _spawnZones.Count);
+            if (_spawnZones[j].IsSpawned() == false)
+            {
+               spawnPoint = j;
+            }
          }
-         _spawnZones[spawnPoint].Spawn(burger.Ingridients[i].GetSpawnable());
+         _spawnZones[spawnPoint].Spawn(ingridients[i]);
+         yield return new WaitForSeconds(0.2f);
       }
    }
 }
