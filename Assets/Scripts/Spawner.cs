@@ -12,13 +12,10 @@ public class Spawner : MonoBehaviour
    [SerializeField] private List<IngridientZoneBase> _spawnZones = new List<IngridientZoneBase>();
    [SerializeField] private GameObject[] objs;
 
-   private void Start()
-   {
-      StartCoroutine(SpawnElements(objs.Select(el => Instantiate(el).GetComponent<ISpawnable>()).ToArray()));
-   }
-
    public IEnumerator SpawnElements(params ISpawnable[] ingridients)
    {
+      ingridients =  objs.Select(el => Instantiate(el).GetComponent<ISpawnable>()).ToArray();
+      
       for (int i = 0; i < ingridients.Length; i++)
       { 
          int spawnPoint = 0;

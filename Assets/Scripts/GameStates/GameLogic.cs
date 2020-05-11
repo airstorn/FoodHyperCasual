@@ -8,7 +8,14 @@ public class GameLogic : MonoBehaviour
 {
     private IGameState[] _allStates;
     private IGameState _currentState;
-    
+
+    public static GameLogic Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private void Start()
     {
         GetStates();
@@ -25,7 +32,7 @@ public class GameLogic : MonoBehaviour
         Debug.Log((_allStates.Length));
     }
 
-    public void ChangeState<T>(T state) where T : IGameState
+    public void ChangeState<T>() where T : IGameState
     {
         _currentState.Deactivate();
         _currentState = _allStates.OfType<T>().First();

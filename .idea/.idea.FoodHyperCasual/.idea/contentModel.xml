@@ -11,6 +11,7 @@
             <e p="GameLogic.cs" t="Include" />
             <e p="IGameState.cs" t="Include" />
             <e p="IMenuPagable.cs" t="Include" />
+            <e p="PlayState.cs" t="Include" />
           </e>
           <e p="IBurgerViewable.cs" t="Include" />
           <e p="Ingridient" t="Include">
@@ -33,6 +34,7 @@
             <e p="MenuState.cs" t="Include" />
             <e p="PageBasement.cs" t="Include" />
             <e p="Pages" t="Include">
+              <e p="GamePage.cs" t="Include" />
               <e p="MenuPage.cs" t="Include" />
             </e>
           </e>

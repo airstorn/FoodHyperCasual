@@ -24,6 +24,12 @@ namespace GameStates
       private void Start()
       {
          _pages = _menuObjects.Select(obj => obj.GetComponent<IMenuPagable>()).ToArray();
+
+         for (int i = 0; i < _pages.Length; i++)
+         {
+            _pages[i].Hide();
+         }
+         
          SwitchPage(_defaultPage, this);
       }
 
@@ -33,7 +39,7 @@ namespace GameStates
          foreach (var tempPage in _pages)
          {
             if (tempPage == pageElement)
-            {
+            { 
                tempPage.Show(args);
             }
             else

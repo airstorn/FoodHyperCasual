@@ -8,6 +8,7 @@ using UnityEngine;
 public class PlayerBurger : MonoBehaviour, IBurgerViewable
 {
     public BurgerData ContainedData;
+    [SerializeField] private Transform _origin;
     [SerializeField] private GameObject _bunObject;
     [SerializeField] private GameObject _secondBunObject;
 
@@ -20,6 +21,7 @@ public class PlayerBurger : MonoBehaviour, IBurgerViewable
     }
     public void Show(BurgerData data)
     {
+        
     }
 
     public void Confirm()
