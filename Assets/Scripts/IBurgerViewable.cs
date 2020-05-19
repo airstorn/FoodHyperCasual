@@ -1,9 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Ingridient;
 using UnityEngine;
 
+public delegate Transform OnIngridientAdded(IIngridient ingridient);
 public interface IBurgerViewable
 {
-    void Show(BurgerData data);
+    event OnIngridientAdded IngridientAction;
     BurgerData GetData();
 }

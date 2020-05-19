@@ -8,41 +8,31 @@ public class InputHandler : MonoBehaviour
     [SerializeField] private Camera _raycastCamera;
     [SerializeField] private Transform _zOffset;
 
-    public OnInputPressed InputPressedAction;
-    public delegate void OnInputPressed(bool b);
+    public static Action<bool> OnClick;
 
     public static Action<Vector3> OnTouchMoved;
-    
+    public static Action<Vector3> OnMoveDelta;
+
+    private ISelectable _currentSelectedSelectable;
+
+    private Vector3 _oldMousePos;
     
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            RaycastHit hit;
-            if (Physics.Raycast(_raycastCamera.ScreenPointToRay(Input.mousePosition), out hit))
-            {
-                var selectable = hit.collider.GetComponent<ISelectable>();
-                if (selectable != null)
-                {
-                    InputPressedAction = selectable.OnSelected;
-                }
-                else
-                {
-                    InputPressedAction = null;
-                }
-            }
-            
-            InputPressedAction?.Invoke(true);
-            
+            OnClick?.Invoke(true);
         } 
 
         if (Input.GetMouseButtonUp(0))
         {
-            InputPressedAction?.Invoke(false);
+            OnClick?.Invoke(false);
         }
 
-        var mousePos = Input.mousePosition;
-        mousePos.z = 2;
-        OnTouchMoved?.Invoke(_raycastCamera.ScreenToWorldPoint(mousePos));
+        _oldMousePos = Input.mousePosition;
+        _oldMousePos.z = 2;
+
+        _oldMousePos = _raycastCamera.ScreenToWorldPoint(_oldMousePos);
+        OnTouchMoved?.Invoke(_oldMousePos);
     }
 }

@@ -6,9 +6,15 @@ using UnityEngine;
 
 public class GameLogic : MonoBehaviour
 {
+    [SerializeField] private GameObject _playerBurgerObject;
+
+    public IBurgerViewable PlayerBurger => _playerBurger;
+    
     private IGameState[] _allStates;
     private IGameState _currentState;
 
+    private IBurgerViewable _playerBurger;
+    
     public static GameLogic Instance;
 
     private void Awake()
@@ -18,9 +24,11 @@ public class GameLogic : MonoBehaviour
 
     private void Start()
     {
+        _playerBurger = _playerBurgerObject.GetComponent<IBurgerViewable>();
+        
         GetStates();
 
-        _currentState = _allStates[0];
+        _currentState = _allStates[1];
         _currentState.Activate(ChangeDebug);
     }
 

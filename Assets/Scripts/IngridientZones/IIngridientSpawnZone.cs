@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using Ingridient;
 using UnityEngine;
 
-public interface IIngridientZone
+public interface IIngridientSpawnZone
 {
     void Spawn(ISpawnable spawnObject);
-    bool IsSpawned();
+    bool IsEmpty();
+    void Remove(ISpawnable spawnable);
+    ISpawnable GetHoldedSpawnable();
 }

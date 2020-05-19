@@ -15,6 +15,7 @@ public struct BurgerData
             _ingridients = new List<IIngridient>(); 
         
         _ingridients.Add(ingridient);
+        
         OnIngridientAdded?.Invoke(ingridient);
     }
 }

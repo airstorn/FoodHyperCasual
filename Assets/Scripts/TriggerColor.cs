@@ -17,6 +17,8 @@ public class TriggerColor : MonoBehaviour
 
    private void OnDrawGizmos()
    {
+      if(_collider == null)
+         return;
       var matrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.lossyScale);
       Gizmos.matrix = transform.localToWorldMatrix;
       Gizmos.color = _drawColor;

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace GameStates
 {
@@ -11,6 +12,7 @@ namespace GameStates
 
       [SerializeField] private GameObject _defaultPage;
       [SerializeField] private GameObject[] _menuObjects;
+      [SerializeField] private EventSystem _uiSystem;
       private IMenuPagable[] _pages;
 
 
@@ -19,9 +21,10 @@ namespace GameStates
       private void Awake()
       {
          Instance = this;
-      }
+         Pull();
+      } 
 
-      private void Start()
+      private void Pull()
       {
          _pages = _menuObjects.Select(obj => obj.GetComponent<IMenuPagable>()).ToArray();
 

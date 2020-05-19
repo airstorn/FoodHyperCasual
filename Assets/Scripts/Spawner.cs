@@ -9,25 +9,69 @@ using Random = UnityEngine.Random;
 
 public class Spawner : MonoBehaviour
 {
-   [SerializeField] private List<IngridientZoneBase> _spawnZones = new List<IngridientZoneBase>();
+   [SerializeField] private List<IngridientSpawnZoneBase> _spawnZones = new List<IngridientSpawnZoneBase>();
    [SerializeField] private GameObject[] objs;
+   private List<ISpawnable> _schedule = new List<ISpawnable>();
+
+   public static Spawner Instance;
+   private void Awake()
+   {
+      Instance = this;
+   }
 
    public IEnumerator SpawnElements(params ISpawnable[] ingridients)
    {
-      ingridients =  objs.Select(el => Instantiate(el).GetComponent<ISpawnable>()).ToArray();
-      
-      for (int i = 0; i < ingridients.Length; i++)
-      { 
-         int spawnPoint = 0;
-         for (int j = 0; j < _spawnZones.Count; j++)
-         {
-            if (_spawnZones[j].IsSpawned() == false)
-            {
-               spawnPoint = j;
-            }
-         }
-         _spawnZones[spawnPoint].Spawn(ingridients[i]);
+      _schedule =  objs.Select(el => Instantiate(el).GetComponent<ISpawnable>()).ToList();
+
+
+      for (int i = 0; i < _spawnZones.Count; i++)
+      {
+         _spawnZones[i].Spawn(_schedule[0]);
+         _schedule.RemoveAt(0);
          yield return new WaitForSeconds(0.2f);
       }
+      
+      if (_schedule.Count != 0)
+      {
+         GameLogic.Instance.PlayerBurger.IngridientAction += PlaceScheduledIngridient;
+      }
+   }
+
+   public void ReturnToSchedule(ISpawnable ing)
+   {
+      foreach (var ingridientZoneBase in _spawnZones)
+      {
+         if (ingridientZoneBase.GetHoldedSpawnable() == ing)
+         {
+            ing.Spawn(ingridientZoneBase.transform);
+         }
+      }
+   }
+   
+   private void OnDestroy()
+   {
+      GameLogic.Instance.PlayerBurger.IngridientAction -= PlaceScheduledIngridient;
+   }
+
+   private Transform PlaceScheduledIngridient(IIngridient obj)
+   {
+      
+      if (_schedule.Count == 0)
+         return null;
+      
+      for (int i = 0; i < _spawnZones.Count; i++)
+      {
+         if(_spawnZones[i].GetHoldedSpawnable() == obj)
+            _spawnZones[i].Remove(null);
+         if (_spawnZones[i].IsEmpty() == true)
+         {
+            Debug.Log(_schedule.Count);
+
+            _spawnZones[i].Spawn(_schedule[0]);
+            _schedule.RemoveAt(0);
+         }
+      }
+
+      return null;
    }
 }

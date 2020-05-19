@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Ingridient;
 using UnityEngine;
 
-public class DefaultIngridientZone : IngridientZoneBase
+public class IngridientSpawnSpawnZone : IngridientSpawnZoneBase
 {
    public override void Spawn(ISpawnable spawnObject)
    {

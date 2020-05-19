@@ -4,5 +4,7 @@ using UnityEngine;
 
 public interface ISelectable
 {
-    void OnSelected(bool selected);
+    void Move(Vector3 pos);
+    void Rotate(Vector3 euler);
+    Vector3 GetPosition();
 }
