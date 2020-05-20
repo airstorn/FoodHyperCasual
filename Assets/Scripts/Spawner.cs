@@ -55,7 +55,6 @@ public class Spawner : MonoBehaviour
 
    private Transform PlaceScheduledIngridient(IIngridient obj)
    {
-      
       if (_schedule.Count == 0)
          return null;
       

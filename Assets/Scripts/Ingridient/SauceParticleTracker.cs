@@ -11,6 +11,14 @@ public class SauceParticleTracker : MonoBehaviour
 
    public Action<int> OnParticleEnter;
 
+   public void Play(bool play)
+   {
+      if (play == true)
+         _trackedSystem.Play();
+      else
+         _trackedSystem.Stop();
+   }
+   
    private void OnParticleTrigger()
    { 
       int count = _trackedSystem.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, _enter);

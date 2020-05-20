@@ -7,4 +7,5 @@ public interface ICookable
    void Cook(float cookState);
    float GetReadiness();
    float GetTotalDuration();
+   Transform GetTransform();
 }

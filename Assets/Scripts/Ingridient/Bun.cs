@@ -13,8 +13,9 @@ public class Bun : MonoBehaviour, IIngridient
 
     private void OnValidate()
     {
-        if (_burgerObject.GetComponent<IBurgerViewable>() == null)
-            _burgerObject = null;
+        if(_burgerObject != null)
+            if (_burgerObject.GetComponent<IBurgerViewable>() == null)
+                _burgerObject = null;
     }
 
     private void Start()

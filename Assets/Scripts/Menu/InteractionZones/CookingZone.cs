@@ -1,73 +1,86 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using Packages.Rider.Editor.UnitTesting;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
-public class CookingZone : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class CookingZone : MonoBehaviour, IInteractableZone
 {
-    [SerializeField] private Transform _scalableTransform;
-    [SerializeField] private GameObject _obj;
-    [SerializeField] private Image _cookingState;
-
-    public static OnEnableHandler PrepareZoneHandler;
-    public delegate CookingZone OnEnableHandler(bool enabled, ICookable cookable);
-
-    private ICookable _currentCookable;
-    private Coroutine _cookRoutine;
+    [SerializeField] private Transform _cookingObjectParent;
+    [SerializeField] private Animator _anim;
+    [SerializeField] private CookingZoneUI _ui;
+    private Transform _cookable;
+    private Coroutine _cookingProcess;
     
-    private void Awake()
+    public bool InteractWith<T>(T interactionObject, InteractableZoneArgs args)
     {
-        PrepareZoneHandler = SetCookable;
-    }
-
-    private CookingZone SetCookable(bool enabled, ICookable cookable)
-    {
-        _obj.SetActive(enabled);
-        _currentCookable = cookable;
-        return this;
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        if (eventData.pointerEnter == _obj)
-        {        
-            Debug.Log(eventData.pointerEnter);
-
-            _scalableTransform.localScale = Vector3.one;
-            _cookRoutine = StartCoroutine(Cook(_currentCookable.Cook));
+        switch (args)
+        {
+            case InteractableZoneArgs.Add:
+                return TryCook(interactionObject);
+            case InteractableZoneArgs.Remove:
+                return RemoveFromCooking(interactionObject);
+                default:
+                    return false;
         }
-    }
-
         
+    }
 
-    public void OnPointerExit(PointerEventData eventData)
+    private bool RemoveFromCooking<T>(T interactionObject)
     {
-        if (eventData.pointerEnter == _obj)
+        if (_cookable != null)
         {
-            _scalableTransform.localScale = Vector3.zero;
-            StopCoroutine(_cookRoutine);
+            _cookable.SetParent(null);
+            _cookable = null;
+            _anim.SetFloat("cook", 0);
+            _ui.StopCooking();
+
+            return  true;
+        }
+        else
+        {
+            return false;
         }
     }
 
-    private void SetScale(bool b)
+    private bool TryCook<T>(T interactionObject)
     {
-        _scalableTransform.localScale = Vector3.one * (b ? 1 : 0);
-    }
-    
-    private IEnumerator Cook(Action<float> cookableAction)
-    {
-        float readiness = _currentCookable.GetReadiness();
-        float totalTime = _currentCookable.GetTotalDuration();
-        while (readiness < totalTime)
+        if (_cookable != null)
+            return false;
+        
+        if (interactionObject is ICookable cookable)
         {
-            _cookingState.fillAmount = readiness / totalTime;
+            Cook(cookable);
+            _anim.SetFloat("cook", 1);
+            _ui.SetCookingState(cookable.GetTotalDuration(),cookable.GetReadiness());
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }  
+    }
+
+    private void Cook(ICookable cookable)
+    {
+        _cookingProcess = StartCoroutine(CookAnimate(cookable));
+        Debug.Log("cooking");
+    }
+
+    private IEnumerator CookAnimate(ICookable cookable)
+    {
+        float time = cookable.GetTotalDuration();
+        float elapsed = cookable.GetReadiness();
+        _cookable = cookable.GetTransform();
+        
+        _cookable.SetParent(_cookingObjectParent);
+        _cookable.localPosition = Vector3.zero;
+        
+        while (elapsed < time && _cookable != null)
+        {
+            cookable.Cook(elapsed);
+            _ui.SetCookingState(cookable.GetTotalDuration(),cookable.GetReadiness());
             
-            cookableAction?.Invoke(readiness);
-            
-            readiness += Time.deltaTime;
+            elapsed += Time.deltaTime;
             yield return null;
         }
     }

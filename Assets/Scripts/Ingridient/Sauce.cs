@@ -12,18 +12,54 @@ public class Sauce : InputMovableBehaviour, ISpawnable
     [SerializeField] private int _fillCountTarget = 20;
     [SerializeField] private int _fillCount;
     [SerializeField] private GameObject _sauceIngridient;
+    [SerializeField] private float _interactionSpeed = 0.5f;
+    private Coroutine _interactionRoutine;
     
     protected override void Start()
     {
         _tracker.OnParticleEnter += OnParticleEnter;
+        OnSelectedAction += Interact;
         base.Start();
+    }
+    
+    public bool Active()
+    {
+        return gameObject.activeInHierarchy;
+    }
+    
+    public void Spawn(Transform origin)
+    {
+        transform.position = origin.transform.position;
+        gameObject.SetActive(true);
+    }
+
+    private void Interact(bool obj)
+    {
+        if(_interactionRoutine != null)
+            StopCoroutine(_interactionRoutine);
+        _interactionRoutine = StartCoroutine(AnimateInteraction(obj));
+    }
+
+    private IEnumerator AnimateInteraction(bool state)
+    {
+        float elapsed = 0;
+        
+        _tracker.Play(state);
+        
+        while (elapsed < _interactionSpeed)
+        {
+            transform.rotation = Quaternion.Lerp(Quaternion.Euler(transform.rotation.eulerAngles), Quaternion.Euler(state == true ? new Vector3(0,0, 150) : Vector3.zero), elapsed / _interactionSpeed);
+            
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
     }
 
     private void OnDisable()
     {
         _tracker.OnParticleEnter -= OnParticleEnter;
     }
-
+    
     private void OnParticleEnter(int obj)
     {
         _fillCount += obj;
@@ -36,27 +72,7 @@ public class Sauce : InputMovableBehaviour, ISpawnable
             _fillCount = 0;
         }
     }
-
-    // public override void OnSelected(bool selected)
-    // {
-    //     _rotation = selected ? Quaternion.Euler(new Vector3(0,0, 165)) : Quaternion.Euler(Vector3.zero);
-    //
-    //     if (selected)
-    //     {
-    //         _sauceSystem.Play();
-    //     }
-    //     else
-    //     {
-    //         _sauceSystem.Stop();
-    //     }
-    //     
-    //     base.OnSelected(selected);
-    // }
-    public void Spawn(Transform origin)
-    {
-        transform.position = origin.transform.position;
-        gameObject.SetActive(true);
-    }
+    
 
     private void OnParticleTrigger()
     {
@@ -66,19 +82,9 @@ public class Sauce : InputMovableBehaviour, ISpawnable
 
     private void Update()
     {
-        // if (selected)
-        // {
-        //     transform.localScale = new Vector3( _interaction.Evaluate(Time.time), 1, 1);
-        // }
-    }
-
-    public void BackToPool()
-    {
-        gameObject.SetActive(false);
-    }
-
-    public bool Active()
-    {
-        return gameObject.activeInHierarchy;
+        if (_selected)
+        {
+            transform.localScale = new Vector3( _interaction.Evaluate(Time.time), 1, 1);
+        }
     }
 }

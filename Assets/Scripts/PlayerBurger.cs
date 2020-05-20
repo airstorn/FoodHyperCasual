@@ -10,7 +10,6 @@ public class PlayerBurger : MonoBehaviour, IBurgerViewable
     public BurgerData ContainedData;
     public event OnIngridientAdded IngridientAction;
     
-    [SerializeField] private Transform _origin;
     [SerializeField] private GameObject _bunObject;
     [SerializeField] private GameObject _secondBunObject;
 
@@ -39,7 +38,6 @@ public class PlayerBurger : MonoBehaviour, IBurgerViewable
 
     private void OnIngridientAdded(IIngridient obj)
     {
-        Debug.Log(obj + " added");
 
         ISelectable select = obj as ISelectable;
         
@@ -50,6 +48,8 @@ public class PlayerBurger : MonoBehaviour, IBurgerViewable
 
 
         if (@select != null) StartCoroutine(PlaceAnimation(@select, vacantPos, @select.Move));
+
+        IngridientAction?.Invoke(obj);
     }
 
     private IEnumerator PlaceAnimation(ISelectable obj, Vector3 targetPos, Action<Vector3> movingAction)
@@ -61,7 +61,7 @@ public class PlayerBurger : MonoBehaviour, IBurgerViewable
         while (elapsedtime < duration)
         {
             movingAction?.Invoke(Vector3.Lerp(objectTransform, targetPos, elapsedtime / duration));
-            obj.Rotate(Vector3.zero);
+            obj.Rotate(new Vector3(0, obj.GetRotation().y, 0));
             
             elapsedtime += Time.deltaTime;
             yield return null;

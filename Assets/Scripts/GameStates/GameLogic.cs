@@ -37,7 +37,6 @@ public class GameLogic : MonoBehaviour
         var childStates = GetComponentsInChildren<IGameState>();
 
         _allStates = childStates;
-        Debug.Log((_allStates.Length));
     }
 
     public void ChangeState<T>() where T : IGameState

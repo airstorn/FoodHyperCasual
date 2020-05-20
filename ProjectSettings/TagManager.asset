@@ -14,8 +14,8 @@ TagManager:
   - 
   - 
   - IgnoreColliders
-  - 
-  - 
+  - Selectable
+  - Zone
   - 
   - 
   - 

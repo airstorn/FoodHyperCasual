@@ -44,7 +44,6 @@ public class Combiner : MonoBehaviour, IInteractableZone
         if(_burger.GetData()._ingridients.Contains(_ingridientInside))
             return false;
             
-        Debug.Log("dsds");
         _burger.GetData().AddIngridient(_ingridientInside);
         _ingridientInside = null;
         return true;

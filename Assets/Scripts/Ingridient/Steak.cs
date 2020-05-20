@@ -8,6 +8,12 @@ public class Steak :  SpawnableIngridient, ICookable
    [SerializeField] private float _readiness;
    [SerializeField] private float _duration;
 
+   protected override void Start()
+   {
+      base.Start();
+   }
+
+
    public void Cook(float cookState)
    {
       _readiness = cookState;
@@ -21,5 +27,10 @@ public class Steak :  SpawnableIngridient, ICookable
    public float GetTotalDuration()
    {
       return _duration;
+   }
+
+   public Transform GetTransform()
+   {
+      return transform;
    }
 }

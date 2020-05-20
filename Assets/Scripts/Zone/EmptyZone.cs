@@ -35,7 +35,7 @@ public class EmptyZone : IInteractableZone
         {
             if (_waitingObjects.ContainsKey(obj) == false)
             {
-                _waitingObjects.Add(obj, _main.StartCoroutine(ReturnAnimation(obj)) );
+                _waitingObjects.Add(obj, _main.StartCoroutine(ReturnAnimation(obj)));
                 
             }
             else
@@ -55,6 +55,10 @@ public class EmptyZone : IInteractableZone
 
             _main.StopCoroutine(containedObject.Value);
 
+            var body = physical.GetBody();
+            body.useGravity = false;
+            body.isKinematic = true;
+            
             _waitingObjects.Remove(physical);
             
             return true;

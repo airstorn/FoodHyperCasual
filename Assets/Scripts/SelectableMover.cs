@@ -8,8 +8,18 @@ public class SelectableMover : MonoBehaviour
     [SerializeField] private Camera _raycastCamera;
     [SerializeField] private LayerMask _selectableMask;
     [SerializeField] private LayerMask _placeMask;
-    
-    private ISelectable _currentSelectable;
+
+    private ISelectable _selectable;
+    private ISelectable _currentSelectable
+    {
+        get { return _selectable; }
+        set
+        {
+            _selectable?.OnSelectedAction?.Invoke(false);
+            _selectable = value;
+            _selectable?.OnSelectedAction?.Invoke(true);
+        }
+    }
     private IInteractableZone _defaultZone;
     private Coroutine _movingRoutine;
     private Vector3 _movingPos;
@@ -36,22 +46,31 @@ public class SelectableMover : MonoBehaviour
            if (_currentSelectable != null)
            {
                _movingRoutine = StartCoroutine(MoveSelectable(_currentSelectable.Move));
-               _defaultZone.InteractWith(_currentSelectable, InteractableZoneArgs.Remove);
+               _currentSelectable.SetInteractableZone(null);
+               // _defaultZone.InteractWith(_currentSelectable, InteractableZoneArgs.Remove);
            }
         }
         else
         {
-            var zone = TryCatchObject<IInteractableZone>(_placeMask);
+            if (_currentSelectable != null)
+            {
+                var zone = TryCatchObject<IInteractableZone>(_placeMask);
 
-            bool success = false;
+                if (zone != null)
+                {
+                   var added = _currentSelectable.SetInteractableZone(zone);
+                   if (added == false)
+                   {
+                       _currentSelectable.SetInteractableZone(_defaultZone);
+                   }
+                }
+                else
+                {
+                    _currentSelectable.SetInteractableZone(_defaultZone);
+                }
 
-            if (zone != null)
-                success = zone.InteractWith(_currentSelectable, InteractableZoneArgs.Add);
-            
-            if(success == false)
-                _defaultZone.InteractWith(_currentSelectable, InteractableZoneArgs.Add);
-            
-            _currentSelectable = null;
+                _currentSelectable = null;
+            }
         }
     }
 
