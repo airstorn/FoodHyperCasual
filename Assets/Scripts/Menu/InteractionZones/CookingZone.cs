@@ -7,6 +7,7 @@ public class CookingZone : MonoBehaviour, IInteractableZone
     [SerializeField] private Transform _cookingObjectParent;
     [SerializeField] private Animator _anim;
     [SerializeField] private CookingZoneUI _ui;
+    [SerializeField] private ParticleSystem _steam;
     private Transform _cookable;
     private Coroutine _cookingProcess;
     
@@ -32,6 +33,7 @@ public class CookingZone : MonoBehaviour, IInteractableZone
             _cookable = null;
             _anim.SetFloat("cook", 0);
             _ui.StopCooking();
+            _steam.Stop();
 
             return  true;
         }
@@ -74,6 +76,7 @@ public class CookingZone : MonoBehaviour, IInteractableZone
         
         _cookable.SetParent(_cookingObjectParent);
         _cookable.localPosition = Vector3.zero;
+        _steam.Play();
         
         while (elapsed < time && _cookable != null)
         {

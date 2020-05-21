@@ -24,7 +24,6 @@ namespace Ingridient
             
             var added = zone?.InteractWith(this, InteractableZoneArgs.Add);
             
-            Debug.Log(added);
             if (added != null)
             {
                 if (added == true)

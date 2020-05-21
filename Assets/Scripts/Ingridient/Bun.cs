@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Ingridient;
 using UnityEngine;
 
-public class Bun : MonoBehaviour, IIngridient
+public class Bun : MonoBehaviour, IIngridient, IEditable
 {
     [SerializeField] private GameObject _burgerObject;
     [SerializeField] private AnimationCurve _spawnCurve;
@@ -16,18 +16,6 @@ public class Bun : MonoBehaviour, IIngridient
         if(_burgerObject != null)
             if (_burgerObject.GetComponent<IBurgerViewable>() == null)
                 _burgerObject = null;
-    }
-
-    private void Start()
-    {
-        _burger = _burgerObject.GetComponent<IBurgerViewable>();
-        _burger.GetData().AddIngridient(this);
-    }
-
-    public void Place(Vector3 pos)
-    {
-        transform.position = pos;
-        StartCoroutine(SpawnAnimate());
     }
 
     private IEnumerator SpawnAnimate()
@@ -46,9 +34,9 @@ public class Bun : MonoBehaviour, IIngridient
     {
         return _height;
     }
-
-    public ISpawnable GetSpawnable()
+    
+    public Transform GetTransform()
     {
-        return null;
+        return transform;
     }
 }

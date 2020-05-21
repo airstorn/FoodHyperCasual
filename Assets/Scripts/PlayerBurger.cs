@@ -40,14 +40,23 @@ public class PlayerBurger : MonoBehaviour, IBurgerViewable
     {
 
         ISelectable select = obj as ISelectable;
-        
+
         var position = transform.position;
         var vacantPos = new Vector3(position.x,
             position.y + ContainedData._ingridients.Sum(el => el != obj ? el.GetHeight() : 0),
-                position.z);
+            position.z);
+        
+        if (select != null)
+        {
+            Debug.Log(select);
 
-
-        if (@select != null) StartCoroutine(PlaceAnimation(@select, vacantPos, @select.Move));
+            if (@select != null) StartCoroutine(PlaceAnimation(@select, vacantPos, @select.Move));
+        }
+        else
+        {
+            var t = obj as IEditable;
+            t.GetTransform().position = vacantPos;
+        }
 
         IngridientAction?.Invoke(obj);
     }

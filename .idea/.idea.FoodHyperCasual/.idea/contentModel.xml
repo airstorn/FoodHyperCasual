@@ -21,6 +21,7 @@
             <e p="Bun.cs" t="Include" />
             <e p="Core" t="Include">
               <e p="ICookable.cs" t="Include" />
+              <e p="IEditable.cs" t="Include" />
               <e p="IIngridient.cs" t="Include" />
               <e p="InputMovableBehaviour.cs" t="Include" />
               <e p="IPhysicable.cs" t="Include" />
