@@ -7,6 +7,7 @@ public class InputHandler : MonoBehaviour
 {
     [SerializeField] private Camera _raycastCamera;
     [SerializeField] private Transform _zOffset;
+    [SerializeField] private LayerMask _hitMask;
 
     public static Action<bool> OnClick;
 
@@ -32,7 +33,19 @@ public class InputHandler : MonoBehaviour
         _oldMousePos = Input.mousePosition;
         _oldMousePos.z = 2;
 
-        _oldMousePos = _raycastCamera.ScreenToWorldPoint(_oldMousePos);
+        RaycastHit hit;
+        Ray ray = _raycastCamera.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out hit, 2, _hitMask))
+        {
+            _oldMousePos = hit.point;
+        }
+        else
+        {
+            _oldMousePos = _raycastCamera.ScreenToWorldPoint(_oldMousePos);
+
+        }
+
         OnTouchMoved?.Invoke(_oldMousePos);
     }
 }

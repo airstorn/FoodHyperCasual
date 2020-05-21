@@ -10,6 +10,7 @@ namespace GameStates
         [SerializeField] private GameObject _ui;
         [SerializeField] private GameObject _playerBurgerObject;
         [SerializeField] private Spawner _ingridientsSpawner;
+        [SerializeField] private CustomerSpawner _customerData;
         
         private IBurgerViewable _playerBurger;
 
@@ -28,6 +29,7 @@ namespace GameStates
 
         public IEnumerator ConfirmAnimation()
         {
+            
             yield return null;
         }
 
@@ -40,8 +42,26 @@ namespace GameStates
         {
             Menu.Instance.SwitchPage(_ui, this); 
 
-            yield return _ingridientsSpawner.SpawnElements(null);
             callback?.Invoke();
+            
+            StartCoroutine(Createlevel());
+            yield break;
+        }
+
+        private IEnumerator Createlevel()
+        {
+            //create customer
+            _customerData.SpawnCustomer();
+            
+            yield return new WaitForSeconds(1);
+            
+            //create criteries
+            
+            //spawn ingridients
+            
+            yield return _ingridientsSpawner.SpawnElements(null);
+
+            //...
         }
 
         public void Deactivate(Action callback = null)

@@ -11,6 +11,12 @@ public class SauceParticleTracker : MonoBehaviour
 
    public Action<int> OnParticleEnter;
 
+   private void Start()
+   {
+      var v = FindObjectOfType<Combiner>();
+      _trackedSystem.trigger.SetCollider(0, v);
+   }
+
    public void Play(bool play)
    {
       if (play == true)

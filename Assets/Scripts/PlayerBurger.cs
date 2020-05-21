@@ -27,8 +27,9 @@ public class PlayerBurger : MonoBehaviour, IBurgerViewable
 
     private void PlaceBun(GameObject obj)
     {
-        obj.SetActive(true);
-        ContainedData.AddIngridient(obj.GetComponent<IIngridient>());
+        var inst = Instantiate(obj);
+        inst.SetActive(true);
+        ContainedData.AddIngridient(inst.GetComponent<IIngridient>());
     }
 
     private void OnDisable()

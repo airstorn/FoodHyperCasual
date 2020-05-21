@@ -29,7 +29,8 @@ public class Sauce : InputMovableBehaviour, ISpawnable
     
     public void Spawn(Transform origin)
     {
-        transform.position = origin.transform.position;
+        transform.position = origin.position;
+        transform.rotation = origin.rotation;
         gameObject.SetActive(true);
     }
 
