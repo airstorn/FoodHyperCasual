@@ -31,7 +31,7 @@ public class InputHandler : MonoBehaviour
         }
 
         _oldMousePos = Input.mousePosition;
-        _oldMousePos.z = 2;
+        _oldMousePos.z = _zOffset.position.z + transform.position.z;
 
         RaycastHit hit;
         Ray ray = _raycastCamera.ScreenPointToRay(Input.mousePosition);

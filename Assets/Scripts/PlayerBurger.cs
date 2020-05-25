@@ -57,6 +57,7 @@ public class PlayerBurger : MonoBehaviour, IBurgerViewable
         {
             var t = obj as IEditable;
             t.GetTransform().position = vacantPos;
+            t.GetTransform().gameObject.layer = 0;
         }
 
         IngridientAction?.Invoke(obj);
