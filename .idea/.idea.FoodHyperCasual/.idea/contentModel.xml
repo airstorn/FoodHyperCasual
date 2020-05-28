@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="$PROJECT_DIR$" t="IncludeRecursive">
+    <e p="C:\Users\mitic\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\mitic\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_FoodHyperCasual.-237465251.00" t="ExcludeRecursive" />
+    <e p="D:\Freelance\FoodHyperCasual" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="Scripts" t="Include">
@@ -18,6 +20,7 @@
             <e p="IGameState.cs" t="Include" />
             <e p="IMenuPagable.cs" t="Include" />
             <e p="PlayState.cs" t="Include" />
+            <e p="RatingState.cs" t="Include" />
           </e>
           <e p="IBurgerViewable.cs" t="Include" />
           <e p="IInteractableZone.cs" t="Include" />
@@ -57,9 +60,13 @@
             <e p="Pages" t="Include">
               <e p="GamePage.cs" t="Include" />
               <e p="MenuPage.cs" t="Include" />
+              <e p="RatingPage.cs" t="Include" />
             </e>
           </e>
           <e p="PlayerBurger.cs" t="Include" />
+          <e p="Rating" t="Include">
+            <e p="BurgerComparer.cs" t="Include" />
+          </e>
           <e p="SelectableMover.cs" t="Include" />
           <e p="Spawner.cs" t="Include" />
           <e p="TriggerColor.cs" t="Include" />
@@ -76,9 +83,7 @@
       <e p="FoodHyperCasual.sln" t="IncludeFlat" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="packages" t="ExcludeRecursive" />
-      <e p="Temp/bin" t="ExcludeRecursive" />
+      <e p="Temp\bin" t="ExcludeRecursive" />
     </e>
-    <e p="$USER_HOME$/Library/Caches/JetBrains/Rider2020.1/extResources" t="IncludeRecursive" />
-    <e p="$USER_HOME$/Library/Caches/JetBrains/Rider2020.1/resharper-host/local/Transient/ReSharperHost/v201/SolutionCaches/_FoodHyperCasual.1813328995.00" t="ExcludeRecursive" />
   </component>
 </project>

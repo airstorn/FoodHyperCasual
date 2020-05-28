@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using Ingridient;
 using UnityEngine;
 
-public class Onion : SpawnableIngridient
+public class Onion : SpawnableIngridient, IEditable
 {
+    public Transform GetTransform()
+    {
+        return transform;
+    }
 }

@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 namespace GameStates
 {
-    public class GamePage : PageBasement, IMenuPagable
+    public class GamePage : PageBasement
     {
         private void Start()
         {

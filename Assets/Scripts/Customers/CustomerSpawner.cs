@@ -6,7 +6,8 @@ public class CustomerSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject _customerTemplate;
     [SerializeField] private Transform _spawnOrigin;
-
+    public Customer Customer => _currentCustomer;
+    
     private Customer _currentCustomer;
     
     public IEnumerator SpawnCustomer()

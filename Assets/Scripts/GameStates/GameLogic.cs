@@ -7,7 +7,9 @@ using UnityEngine;
 public class GameLogic : MonoBehaviour
 {
     [SerializeField] private GameObject _playerBurgerObject;
+    [SerializeField] private Spawner _spawner;
 
+    public Spawner IngridientSpawner => _spawner;
     public IBurgerViewable PlayerBurger => _playerBurger;
     
     private IGameState[] _allStates;
@@ -26,18 +28,19 @@ public class GameLogic : MonoBehaviour
     {
         _playerBurger = _playerBurgerObject.GetComponent<IBurgerViewable>();
         
-        GetStates();
+        LoadStates();
 
         _currentState = _allStates[1];
         _currentState.Activate(ChangeDebug);
     }
 
-    private void GetStates()
+    private void LoadStates()
     {
         var childStates = GetComponentsInChildren<IGameState>();
 
         _allStates = childStates;
     }
+    
 
     public void ChangeState<T>() where T : IGameState
     {

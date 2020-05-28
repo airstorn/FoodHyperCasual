@@ -6,17 +6,9 @@ using UnityEngine;
 
 public class Bun : MonoBehaviour, IIngridient, IEditable
 {
-    [SerializeField] private GameObject _burgerObject;
     [SerializeField] private AnimationCurve _spawnCurve;
     [SerializeField] private float _height = 0.016f;
     private IBurgerViewable _burger;
-
-    private void OnValidate()
-    {
-        if(_burgerObject != null)
-            if (_burgerObject.GetComponent<IBurgerViewable>() == null)
-                _burgerObject = null;
-    }
 
     private IEnumerator SpawnAnimate()
     {

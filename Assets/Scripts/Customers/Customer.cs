@@ -9,6 +9,8 @@ public class Customer : MonoBehaviour
     [SerializeField] private Animator _anim;
     [SerializeField] private Transform _burgerOffset;
     [SerializeField] private float _rotationSpeed;
+    public IBurgerViewable Burger => _customerBurger;
+    
     private IBurgerViewable _customerBurger;
     private CustomerRequestCreator _creator;
     
@@ -52,15 +54,28 @@ public class Customer : MonoBehaviour
             for (int i = 0; i < objs.Length; i++)
             {
                 Transform objectTransform = objs[i].GetTransform();
-
-                Vector3 xPos = new Vector3(Mathf.Lerp(-1, 1, ((float)i / objs.Length) * (time / elapsed)),
-                    objectTransform.position.y,
+                
+                Vector3 xPos = new Vector3(Mathf.Lerp(-0.7f, 0.7f, ((float)i / (objs.Length - 1)) * (time / elapsed)),
+                        Mathf.Lerp(_burgerOffset.position.y + -0.5f,  _burgerOffset.position.y + 0.4f, ((float)i / (objs.Length - 1)) * (time / elapsed)),
                     objectTransform.position.z)
                     ;
 
 
                 objectTransform.position = Vector3.Lerp(objectTransform.position, xPos, time / elapsed);
             }
+            
+            time += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    public IEnumerator AnimateSolving()
+    {
+        float time = 0;
+        float elapsed = 0.5f;
+        while (time < elapsed)
+        {
+            _burgerOffset.rotation = Quaternion.Lerp(_burgerOffset.rotation, Quaternion.identity, time / elapsed);
             
             time += Time.deltaTime;
             yield return null;

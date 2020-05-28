@@ -33,7 +33,7 @@ public class CustomerBurger : MonoBehaviour, IBurgerViewable
             t.GetTransform().localPosition = vacantPos;
             t.GetTransform().gameObject.layer = 0;
             
-            t.GetTransform().localScale = Vector3.one * 2;
+            t.GetTransform().localScale = Vector3.one * 1.5f;
     }
 
     public ref BurgerData GetData()

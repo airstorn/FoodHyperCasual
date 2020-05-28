@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Ingridient;
 using UnityEngine;
 
 namespace GameStates
 {
     public class PlayState : MonoBehaviour, IGameState
     {
+        [SerializeField] private GameLogic _logic;
         [SerializeField] private GameObject _ui;
         [SerializeField] private GameObject _playerBurgerObject;
         [SerializeField] private Spawner _ingridientsSpawner;
         [SerializeField] private CustomerSpawner _customerData;
+        [SerializeField] private ParticleSystem _confirmParticles;
+        [SerializeField] private GameObject _firstBun;
+        [SerializeField] private GameObject _secondBun;
         
         private IBurgerViewable _playerBurger;
 
@@ -24,14 +29,19 @@ namespace GameStates
 
         public void Confirm()
         {
-            StartCoroutine(ConfirmAnimation());
-        }
-
-        public IEnumerator ConfirmAnimation()
-        {
+            PlaceBun(_secondBun);
             
-            yield return null;
+            _confirmParticles.Play();
+            _logic.ChangeState<RatingState>();
         }
+        
+        private void PlaceBun(GameObject obj)
+        {
+            var inst = Instantiate(obj);
+            inst.SetActive(true);
+            _logic.PlayerBurger.GetData().AddIngridient(inst.GetComponent<IIngridient>());
+        }
+       
 
         public void Activate(Action activatAction)
         {
@@ -41,7 +51,7 @@ namespace GameStates
         private IEnumerator ActivateAnimation(Action callback)
         {
             Menu.Instance.SwitchPage(_ui, this); 
-
+            PlaceBun(_firstBun);
             callback?.Invoke();
             
             StartCoroutine(Createlevel());

@@ -47,6 +47,11 @@ public class Spawner : MonoBehaviour
          }
       }
    }
+
+   public void Clear()
+   {
+      
+   }
    
    private void OnDestroy()
    {

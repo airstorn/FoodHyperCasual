@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class PageBasement : MonoBehaviour
+public abstract class PageBasement : MonoBehaviour, IMenuPagable
 {
     [SerializeField] protected GameObject _pageObject;
     public virtual void Show<T>(T args)

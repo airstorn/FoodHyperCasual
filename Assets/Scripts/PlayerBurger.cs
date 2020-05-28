@@ -13,23 +13,11 @@ public class PlayerBurger : MonoBehaviour, IBurgerViewable
     [SerializeField] private GameObject _bunObject;
     [SerializeField] private GameObject _secondBunObject;
 
-    private void Start()
+    private void Awake()
     {
         ContainedData.OnIngridientAdded += OnIngridientAdded;
         
         ContainedData._ingridients = new List<IIngridient>();
-        PlaceBun(_bunObject);
-    }
-    public void Confirm()
-    {
-        PlaceBun(_secondBunObject);
-    }
-
-    private void PlaceBun(GameObject obj)
-    {
-        var inst = Instantiate(obj);
-        inst.SetActive(true);
-        ContainedData.AddIngridient(inst.GetComponent<IIngridient>());
     }
 
     private void OnDisable()
@@ -58,6 +46,7 @@ public class PlayerBurger : MonoBehaviour, IBurgerViewable
             var t = obj as IEditable;
             t.GetTransform().position = vacantPos;
             t.GetTransform().gameObject.layer = 0;
+            t.GetTransform().SetParent(transform);
         }
 
         IngridientAction?.Invoke(obj);
@@ -77,6 +66,11 @@ public class PlayerBurger : MonoBehaviour, IBurgerViewable
             elapsedtime += Time.deltaTime;
             yield return null;
         }
+        
+        var t = obj as IEditable;
+        t.GetTransform().position = targetPos;
+        t.GetTransform().gameObject.layer = 0;
+        t.GetTransform().SetParent(transform);
     }
 
 
