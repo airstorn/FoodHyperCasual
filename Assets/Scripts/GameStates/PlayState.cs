@@ -51,7 +51,7 @@ namespace GameStates
         private IEnumerator Createlevel()
         {
             //create customer
-            _customerData.SpawnCustomer();
+            yield return StartCoroutine(_customerData.SpawnCustomer());
             
             yield return new WaitForSeconds(1);
             

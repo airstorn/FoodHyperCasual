@@ -8,5 +8,5 @@ public delegate Transform OnIngridientAdded(IIngridient ingridient);
 public interface IBurgerViewable
 {
     event OnIngridientAdded IngridientAction;
-    BurgerData GetData();
+    ref BurgerData GetData();
 }

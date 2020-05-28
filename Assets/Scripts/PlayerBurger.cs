@@ -80,8 +80,8 @@ public class PlayerBurger : MonoBehaviour, IBurgerViewable
     }
 
 
-    public BurgerData GetData()
+    public ref BurgerData GetData()
     {
-        return ContainedData;
+        return ref ContainedData;
     }
 }

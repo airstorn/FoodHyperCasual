@@ -8,7 +8,8 @@ public class CustomerSpawner : MonoBehaviour
     [SerializeField] private Transform _spawnOrigin;
 
     private Customer _currentCustomer;
-    public void SpawnCustomer()
+    
+    public IEnumerator SpawnCustomer()
     {
         if (_currentCustomer == null)
         {
@@ -18,6 +19,11 @@ public class CustomerSpawner : MonoBehaviour
         }
         
         _currentCustomer.SetVisible(true);
+        yield return new WaitForSeconds(1);
+        _currentCustomer.CreateBurger();
+        yield return new WaitForSeconds(0.5f);
+        yield return StartCoroutine(_currentCustomer.BurgerRotation(-45));
+        yield return StartCoroutine(_currentCustomer.AnimateRequest());
     }
 
     public void HideCustomer()

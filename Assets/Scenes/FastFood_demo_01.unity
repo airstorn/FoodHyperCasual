@@ -32949,6 +32949,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PREF_FastFood_Lamp_02 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 7668016644567038735, guid: 885d2e05926f7104a9bfea892ed88d41,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 885d2e05926f7104a9bfea892ed88d41, type: 3}
 --- !u!4 &1179433086 stripped
@@ -33956,6 +33961,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PREF_FastFood_Lamp_02 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7668016644567038735, guid: 885d2e05926f7104a9bfea892ed88d41,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 885d2e05926f7104a9bfea892ed88d41, type: 3}

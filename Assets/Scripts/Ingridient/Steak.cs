@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Ingridient;
 using UnityEngine;
 
-public class Steak :  SpawnableIngridient, ICookable
+public class Steak :  SpawnableIngridient, ICookable, IEditable
 {
    [SerializeField] private float _readiness;
    [SerializeField] private float _duration;
