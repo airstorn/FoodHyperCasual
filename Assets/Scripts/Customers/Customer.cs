@@ -9,6 +9,7 @@ public class Customer : MonoBehaviour
     [SerializeField] private Animator _anim;
     [SerializeField] private Transform _burgerOffset;
     [SerializeField] private float _rotationSpeed;
+    [SerializeField] private Vector2 _size;
     public IBurgerViewable Burger => _customerBurger;
     
     private IBurgerViewable _customerBurger;
@@ -54,14 +55,17 @@ public class Customer : MonoBehaviour
             for (int i = 0; i < objs.Length; i++)
             {
                 Transform objectTransform = objs[i].GetTransform();
+
+                var position = _burgerOffset.position;
                 
-                Vector3 xPos = new Vector3(Mathf.Lerp(-0.7f, 0.7f, ((float)i / (objs.Length - 1)) * (time / elapsed)),
-                        Mathf.Lerp(_burgerOffset.position.y + -0.5f,  _burgerOffset.position.y + 0.4f, ((float)i / (objs.Length - 1)) * (time / elapsed)),
+                Vector3 sizedPosition = new Vector3(
+                        Mathf.Lerp(position.x + -_size.x,  position.x + _size.x, ((float)i / (objs.Length - 1)) * (time / elapsed)),
+                        Mathf.Lerp(position.y + -_size.y,  position.y + _size.y, ((float)i / (objs.Length - 1)) * (time / elapsed)),
                     objectTransform.position.z)
                     ;
 
 
-                objectTransform.position = Vector3.Lerp(objectTransform.position, xPos, time / elapsed);
+                objectTransform.position = Vector3.Lerp(objectTransform.position, sizedPosition, time / elapsed);
             }
             
             time += Time.deltaTime;

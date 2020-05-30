@@ -13,7 +13,6 @@ namespace GameStates
         [SerializeField] private GameObject _playerBurgerObject;
         [SerializeField] private Spawner _ingridientsSpawner;
         [SerializeField] private CustomerSpawner _customerData;
-        [SerializeField] private ParticleSystem _confirmParticles;
         [SerializeField] private GameObject _firstBun;
         [SerializeField] private GameObject _secondBun;
         
@@ -31,7 +30,6 @@ namespace GameStates
         {
             PlaceBun(_secondBun);
             
-            _confirmParticles.Play();
             _logic.ChangeState<RatingState>();
         }
         

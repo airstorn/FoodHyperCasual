@@ -5,7 +5,7 @@ using System.Linq;
 using Ingridient;
 using UnityEngine;
 
-public class PlayerBurger : MonoBehaviour, IBurgerViewable
+public class PlayerBurger : MonoBehaviour, IBurgerViewable, IEditable
 {
     public BurgerData ContainedData;
     public event OnIngridientAdded IngridientAction;
@@ -77,5 +77,10 @@ public class PlayerBurger : MonoBehaviour, IBurgerViewable
     public ref BurgerData GetData()
     {
         return ref ContainedData;
+    }
+
+    public Transform GetTransform()
+    {
+        return transform;
     }
 }

@@ -231,6 +231,7 @@ MonoBehaviour:
   _anim: {fileID: 8023861512163330535}
   _burgerOffset: {fileID: 2955119255818311401}
   _rotationSpeed: 0.5
+  _size: {x: 0.5, y: 0.3}
 --- !u!114 &4667933676664516809
 MonoBehaviour:
   m_ObjectHideFlags: 0

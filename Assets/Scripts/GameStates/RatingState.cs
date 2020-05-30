@@ -7,36 +7,71 @@ using UnityEngine;
 public class RatingState : MonoBehaviour, IGameState
 {
     [SerializeField] private GameLogic _logic;
-    [SerializeField] private Transform _camera;
-    [SerializeField] private Transform _cameraNear;
-    [SerializeField] private Transform _cameraDefault;
     [SerializeField] private CustomerSpawner _customerSpawner;
     [SerializeField] private GameObject _ui;
+    [SerializeField] private ParticleSystem _particles;
+    [SerializeField] private MovingRails _cameraMovement;
+    [SerializeField] private MovingRails _burgerMovement;
+
+    [Serializable]
+    public struct MovingRails
+    {
+        public Transform Target;
+        public Transform From;
+        public Transform To;
+
+    }
     public void Activate(Action activatAction)
     {
-        StartCoroutine(CameraMove(_cameraNear, activatAction));
+        StartCoroutine(AnimateActivate(activatAction));
+       
+    }
+
+    private IEnumerator AnimateActivate(Action activatAction)
+    { 
+        var cameraData = new MovingUtility.MovingContainer()
+        {
+            originPos = _cameraMovement.From.position,
+            targetPos = _cameraMovement.To.position,
+            duration = 1f,
+        }; 
+        
+        var burgerData = new MovingUtility.MovingContainer()
+        {
+            originPos = _burgerMovement.From.position,
+            targetPos = _burgerMovement.To.position,
+            duration = 1.2f
+        };
+        
+        StartCoroutine(MovingUtility.MoveTo(cameraData, CameraMove));
+        
+        yield return StartCoroutine(MovingUtility.MoveTo(burgerData, BurgerMove));
+        
+        _particles.Play();
+        
         var rating = BurgerComparer.Compare(_customerSpawner.Customer.Burger.GetData(), _logic.PlayerBurger.GetData());
         Menu.Instance.SwitchPage(_ui, rating);
     }
 
-    public void Deactivate(Action callback = null)
+    private void CameraMove(Vector3 obj)
     {
-        StartCoroutine(CameraMove(_cameraDefault, callback));
+        _cameraMovement.Target.position = obj;
     }
 
-    private IEnumerator CameraMove(Transform target, Action callback)
+    private void BurgerMove(Vector3 burgerPos)
     {
-        float time = 0;
-        float elapsed = 0.5f;
-        while (time < elapsed)
+        _burgerMovement.Target.position = burgerPos;
+    }
+
+    public void Deactivate(Action callback = null)
+    {
+        var data = new MovingUtility.MovingContainer()
         {
-            _camera.position = Vector3.Lerp(_camera.position, target.position, time / elapsed);
-            _camera.rotation = Quaternion.Lerp(_camera.rotation, target.rotation, time / elapsed);
-            
-            time += Time.deltaTime;
-            yield return null;
-        }
+            originPos = _cameraMovement.To.position,
+            targetPos = _cameraMovement.From.position,
+            duration = 1f,
+        };
         
-        callback?.Invoke();
+        StartCoroutine(MovingUtility.MoveTo(data, CameraMove));
     }
 }
