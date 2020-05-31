@@ -4964,3 +4964,51 @@ MonoBehaviour:
   _sauceIngridient: {fileID: 4336737903500227120, guid: 7879c68282d416f4e994a0f519da8d34,
     type: 3}
   _interactionSpeed: 0.5
+  _spawnAnim:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _depawnAnim:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.29627633
+      outSlope: -0.29627633
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.21646342
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -1.9123302
+      outSlope: -1.9123302
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.06707317
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

@@ -16,15 +16,8 @@ namespace GameStates
         [SerializeField] private GameObject _firstBun;
         [SerializeField] private GameObject _secondBun;
         
-        private IBurgerViewable _playerBurger;
 
-        private void OnValidate()
-        {
-            if (_playerBurgerObject.GetComponent<IBurgerViewable>() == null)
-            {
-                _playerBurgerObject = null;
-            }
-        }
+  
 
         public void Confirm()
         {
@@ -33,48 +26,71 @@ namespace GameStates
             _logic.ChangeState<RatingState>();
         }
         
+        public void Deactivate(Action callback)
+        {
+            StartCoroutine(HideCustomer(callback));
+            _ingridientsSpawner.Clear();
+
+        }
+
+        public void Activate(Action activatAction)
+        {
+            StartCoroutine(Createlevel(activatAction));
+        }
+
+        private IEnumerator Createlevel(Action callback)
+        {
+            _ingridientsSpawner.Clear();
+            Menu.Instance.SwitchPage(_ui, this); 
+            
+            ClearPlayerBurger();
+            
+            PlaceBun(_firstBun);
+            
+            yield return StartCoroutine(_customerData.SpawnCustomer());
+            
+            yield return new WaitForSeconds(0.2f);
+            
+            yield return _ingridientsSpawner.SpawnElements(null);
+            
+            callback?.Invoke();
+        }
+        
+        private void OnValidate()
+        {
+            if (_playerBurgerObject.GetComponent<IBurgerViewable>() == null)
+            {
+                _playerBurgerObject = null;
+            }
+        }
+
+        private void ClearPlayerBurger()
+        {
+            if(_logic.PlayerBurger.GetData()._ingridients == null)
+                return;
+            
+            foreach (var ingridient in _logic.PlayerBurger.GetData()._ingridients)
+            {
+                var editable = ingridient as IEditable;
+                if (editable != null) Destroy(editable.GetTransform().gameObject);
+            }
+            
+            _logic.PlayerBurger.GetData()._ingridients.Clear();
+        }
+        
         private void PlaceBun(GameObject obj)
         {
             var inst = Instantiate(obj);
             inst.SetActive(true);
             _logic.PlayerBurger.GetData().AddIngridient(inst.GetComponent<IIngridient>());
         }
+
        
-
-        public void Activate(Action activatAction)
+        private IEnumerator HideCustomer(Action ac)
         {
-            StartCoroutine(ActivateAnimation(activatAction));
-        }
-
-        private IEnumerator ActivateAnimation(Action callback)
-        {
-            Menu.Instance.SwitchPage(_ui, this); 
-            PlaceBun(_firstBun);
-            callback?.Invoke();
-            
-            StartCoroutine(Createlevel());
-            yield break;
-        }
-
-        private IEnumerator Createlevel()
-        {
-            //create customer
-            yield return StartCoroutine(_customerData.SpawnCustomer());
-            
+            _customerData.Customer.SetVisible(false);
             yield return new WaitForSeconds(1);
-            
-            //create criteries
-            
-            //spawn ingridients
-            
-            yield return _ingridientsSpawner.SpawnElements(null);
-
-            //...
-        }
-
-        public void Deactivate(Action callback = null)
-        {
-            
+            ac.Invoke();
         }
     }
 }

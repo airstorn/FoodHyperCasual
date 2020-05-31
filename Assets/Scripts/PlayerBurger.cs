@@ -27,6 +27,8 @@ public class PlayerBurger : MonoBehaviour, IBurgerViewable, IEditable
 
     private void OnIngridientAdded(IIngridient obj)
     {
+        if(obj is ISpawnable spawnable)
+            Spawner.Instance.RemoveFromWaiting(spawnable);
 
         ISelectable select = obj as ISelectable;
 
@@ -37,8 +39,6 @@ public class PlayerBurger : MonoBehaviour, IBurgerViewable, IEditable
         
         if (select != null)
         {
-            Debug.Log(select);
-
             if (@select != null) StartCoroutine(PlaceAnimation(@select, vacantPos, @select.Move));
         }
         else

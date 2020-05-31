@@ -6,5 +6,5 @@ using UnityEngine;
 public interface IGameState
 {
    void Activate(Action activatAction);
-   void Deactivate(Action callback = null);   
+   void Deactivate(Action callback);   
 }

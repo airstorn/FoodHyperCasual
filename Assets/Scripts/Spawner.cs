@@ -48,9 +48,30 @@ public class Spawner : MonoBehaviour
       }
    }
 
+   public void RemoveFromWaiting(ISpawnable spawnable)
+   {
+      foreach (var spawnZone in _spawnZones)
+      {
+         if (spawnZone.GetHoldedSpawnable() == spawnable)
+         {
+            spawnZone.Remove(spawnable);
+         }
+      }
+   }
+
    public void Clear()
    {
+      foreach (var spawnable in _schedule)
+      {
+         spawnable.Despawn();
+      }
       
+      _schedule.Clear();
+      
+      foreach (var spawnZone in _spawnZones)
+      { 
+         if(spawnZone.IsEmpty() == false) spawnZone.GetHoldedSpawnable().Despawn();
+      }
    }
    
    private void OnDestroy()
@@ -69,8 +90,6 @@ public class Spawner : MonoBehaviour
             _spawnZones[i].Remove(null);
          if (_spawnZones[i].IsEmpty() == true)
          {
-            Debug.Log(_schedule.Count);
-
             _spawnZones[i].Spawn(_schedule[0]);
             _schedule.RemoveAt(0);
          }

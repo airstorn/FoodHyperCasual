@@ -12,18 +12,24 @@ public class CustomerSpawner : MonoBehaviour
     
     public IEnumerator SpawnCustomer()
     {
-        if (_currentCustomer == null)
+        if (!_currentCustomer)
         {
             var customer = Instantiate(_customerTemplate);
             customer.transform.position = _spawnOrigin.position;
             _currentCustomer = customer.GetComponent<Customer>();
         }
         
+        _currentCustomer.ClearRequest();
+        
         _currentCustomer.SetVisible(true);
+        _currentCustomer.SetRandomSkin();
+        
         yield return new WaitForSeconds(1);
+        
         _currentCustomer.CreateBurger();
+        
         yield return new WaitForSeconds(0.5f);
-        yield return StartCoroutine(_currentCustomer.BurgerRotation(-45));
+        
         yield return StartCoroutine(_currentCustomer.AnimateRequest());
     }
 

@@ -44,13 +44,18 @@ public class GameLogic : MonoBehaviour
 
     public void ChangeState<T>() where T : IGameState
     {
-        _currentState.Deactivate();
+        var state = _currentState;
         _currentState = _allStates.OfType<T>().First();
+        state.Deactivate(StateActivate);
+    }
+
+    private void StateActivate()
+    {
         _currentState.Activate(ChangeDebug);
     }
 
+
     private void ChangeDebug()
     {
-        Debug.Log("state switched to " + _currentState);
     }
 }

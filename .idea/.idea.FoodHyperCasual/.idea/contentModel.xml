@@ -1,13 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="$PROJECT_DIR$" t="IncludeRecursive">
+    <e p="C:\Users\mitic\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\mitic\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_FoodHyperCasual.-237465251.00" t="ExcludeRecursive" />
+    <e p="D:\Freelance\FoodHyperCasual" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="Scripts" t="Include">
+          <e p="AimingAssets" t="Include">
+            <e p="Aimer.cs" t="Include" />
+            <e p="CharacterMovement.cs" t="Include" />
+            <e p="CharacterMovementAnimator.cs" t="Include" />
+            <e p="CharacterStanceAnimator.cs" t="Include" />
+            <e p="CharacterWeaponAnimator.cs" t="Include" />
+            <e p="Croucher.cs" t="Include" />
+            <e p="DeadStateController.cs" t="Include" />
+            <e p="DirectAimController.cs" t="Include" />
+            <e p="RelativeAimController.cs" t="Include" />
+            <e p="Strafer.cs" t="Include" />
+            <e p="ZombieHitting.cs" t="Include" />
+            <e p="ZombieStateController.cs" t="Include" />
+          </e>
           <e p="BurgerData.cs" t="Include" />
+          <e p="CharacterMaker" t="Include">
+            <e p="AimPoint.cs" t="Include" />
+            <e p="CharacterAppearanceObject.cs" t="Include" />
+            <e p="CharacterBehaviorObject.cs" t="Include" />
+            <e p="CharacterMakerWizard.cs" t="Include" />
+            <e p="Hand.cs" t="Include" />
+            <e p="IInitializable.cs" t="Include" />
+          </e>
           <e p="Combiner.cs" t="Include" />
+          <e p="CommonCharacterAssets" t="Include">
+            <e p="SimpleCharacterControl.cs" t="Include" />
+          </e>
           <e p="Core" t="Include">
+            <e p="EmptySpawnable.cs" t="Include" />
             <e p="MovingUtility.cs" t="Include" />
           </e>
           <e p="Customers" t="Include">
@@ -15,6 +43,14 @@
             <e p="CustomerBurger.cs" t="Include" />
             <e p="CustomerRequestCreator.cs" t="Include" />
             <e p="CustomerSpawner.cs" t="Include" />
+          </e>
+          <e p="DemoAssets" t="Include">
+            <e p="CameraLogic.cs" t="Include" />
+            <e p="Demo.cs" t="Include" />
+            <e p="DemoCameraLogic.cs" t="Include" />
+            <e p="DemoControls.cs" t="Include" />
+            <e p="DemoUI.cs" t="Include" />
+            <e p="ThirdPersonCamera.cs" t="Include" />
           </e>
           <e p="GameStates" t="Include">
             <e p="GameLogic.cs" t="Include" />
@@ -49,6 +85,16 @@
             <e p="IngridientSpawnZoneBase.cs" t="Include" />
           </e>
           <e p="InputHandler.cs" t="Include" />
+          <e p="ItemAssets" t="Include">
+            <e p="AnimationSetBool.cs" t="Include" />
+            <e p="CharacterItemAnimator.cs" t="Include" />
+            <e p="ItemHoldLogic.cs" t="Include" />
+          </e>
+          <e p="Items" t="Include">
+            <e p="ItemAnimationsObject.cs" t="Include" />
+            <e p="ItemLogic.cs" t="Include" />
+            <e p="ItemObject.cs" t="Include" />
+          </e>
           <e p="Menu" t="Include">
             <e p="InteractionZones" t="Include">
               <e p="CookingZone.cs" t="Include" />
@@ -79,14 +125,15 @@
           <e p="sh_Flipbook_01.shader" t="Include" />
           <e p="sh_Monitor_01.shader" t="Include" />
           <e p="sh_Slide_01.shader" t="Include" />
+          <e p="SharedShaders" t="Include">
+            <e p="CelShader.shader" t="Include" />
+          </e>
         </e>
       </e>
       <e p="FoodHyperCasual.sln" t="IncludeFlat" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="packages" t="ExcludeRecursive" />
-      <e p="Temp/bin" t="ExcludeRecursive" />
+      <e p="Temp\bin" t="ExcludeRecursive" />
     </e>
-    <e p="$USER_HOME$/Library/Caches/JetBrains/Rider2020.1/extResources" t="IncludeRecursive" />
-    <e p="$USER_HOME$/Library/Caches/JetBrains/Rider2020.1/resharper-host/local/Transient/ReSharperHost/v201/SolutionCaches/_FoodHyperCasual.1813328995.00" t="ExcludeRecursive" />
   </component>
 </project>

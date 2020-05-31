@@ -1,29 +1,41 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using GameStates;
 using UnityEngine;
 using UnityEngine.Assertions.Comparers;
 using UnityEngine.UI;
 
 public class RatingPage : PageBasement
 {
+    [SerializeField] private GameLogic _logic;
     [SerializeField] private CanvasGroup _bg;
     [SerializeField] private Image _rating;
+    [SerializeField] private Button _continueButton;
 
     public override void Show<T>(T args)
     {
         base.Show(args);
         _bg.gameObject.SetActive(true);
+        _continueButton.gameObject.SetActive(false);
+        
         var f = float.Parse(args.ToString());
 
         StartCoroutine(AnimateRating(f));
         
     }
 
+    public void ContinueButton()
+    {
+         _logic.ChangeState<PlayState>();
+    }
+
     private IEnumerator AnimateRating(float rating)
     {
         yield return StartCoroutine(AnimateFloat(0, 1, 1, BackGroundAlpha));
-        StartCoroutine(AnimateFloat(0, rating, 5, Rating));
+        yield return StartCoroutine(AnimateFloat(0, rating, 2, Rating));
+
+        _continueButton.gameObject.SetActive(true);
     }
 
     private void Rating(float obj)

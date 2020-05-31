@@ -57,8 +57,6 @@ namespace Ingridient
             return transform.rotation.eulerAngles;
         }
 
-
-
         public Rigidbody GetBody()
         {
             return _body;

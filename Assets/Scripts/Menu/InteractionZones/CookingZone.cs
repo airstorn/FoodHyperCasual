@@ -65,7 +65,6 @@ public class CookingZone : MonoBehaviour, IInteractableZone
     private void Cook(ICookable cookable)
     {
         _cookingProcess = StartCoroutine(CookAnimate(cookable));
-        Debug.Log("cooking");
     }
 
     private IEnumerator CookAnimate(ICookable cookable)

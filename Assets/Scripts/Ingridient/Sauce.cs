@@ -13,8 +13,10 @@ public class Sauce : InputMovableBehaviour, ISpawnable
     [SerializeField] private int _fillCount;
     [SerializeField] private GameObject _sauceIngridient;
     [SerializeField] private float _interactionSpeed = 0.5f;
-    private Coroutine _interactionRoutine;
-    
+    [SerializeField] private Coroutine _interactionRoutine;
+    [SerializeField] private AnimationCurve _spawnAnim;
+    [SerializeField] private AnimationCurve _depawnAnim;
+
     protected override void Start()
     {
         _tracker.OnParticleEnter += OnParticleEnter;
@@ -22,18 +24,47 @@ public class Sauce : InputMovableBehaviour, ISpawnable
         base.Start();
     }
     
-    public bool Active()
-    {
-        return gameObject.activeInHierarchy;
-    }
-    
     public void Spawn(Transform origin)
     {
         transform.position = origin.position;
         transform.rotation = origin.rotation;
         gameObject.SetActive(true);
+        
+        var spawnSize = new MovingUtility.FloatLerpContainer()
+        {
+            Duration = 1f,
+            StartValue = 0,
+            TargetValue = 1
+        };
+        
+        StartCoroutine(MovingUtility.LerpFloat(spawnSize, SpawnAnimation));
     }
 
+    public void Despawn()
+    {
+        var despawnAnim = new MovingUtility.FloatLerpContainer()
+        {
+            Duration = 1f,
+            StartValue = 0,
+            TargetValue = 1
+        };
+        
+        Spawner.Instance.RemoveFromWaiting(this);
+        
+        StartCoroutine(MovingUtility.LerpFloat(despawnAnim, DespawnAnimation, ()  => Destroy(gameObject)));
+        Debug.Log(despawnAnim.Duration);
+    }
+    
+    private void DespawnAnimation(float delta)
+    {
+        transform.localScale = Vector3.one * _depawnAnim.Evaluate(delta);
+    }
+    
+    private void SpawnAnimation(float delta)
+    {
+        transform.localScale = Vector3.one * _spawnAnim.Evaluate(delta);
+    }
+    
     private void Interact(bool obj)
     {
         if(_interactionRoutine != null)

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using Ingridient;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public class SpawnableIngridient : InputMovableBehaviour, IIngridient, ISpawnabl
     [SerializeField] private bool _placed = false;
     [SerializeField] private float _height = 0.05f;
     [SerializeField] private AnimationCurve _spawnAnim;
+    [SerializeField] private AnimationCurve _depawnAnim;
     public float GetHeight()
     {
         return _height;
@@ -20,29 +22,38 @@ public class SpawnableIngridient : InputMovableBehaviour, IIngridient, ISpawnabl
 
         gameObject.SetActive(true);
 
-        StartCoroutine(SpawnAnimation());
-    }
-
-    private IEnumerator SpawnAnimation()
-    {
-        float elapsed = 1;
-        float time = 0;
-        while (time < elapsed)
+        var spawnSize = new MovingUtility.FloatLerpContainer()
         {
-            transform.localScale = Vector3.one * _spawnAnim.Evaluate(time / elapsed);
-            
-            time += Time.deltaTime;
-            yield return null;
-        }
+            Duration = 1f,
+            StartValue = 0,
+            TargetValue = 1
+        };
+        
+        StartCoroutine(MovingUtility.LerpFloat(spawnSize, SpawnAnimation));
     }
 
-    public void BackToPool()
+    public void Despawn()
     {
-        gameObject.SetActive(false);
+        var despawnAnim = new MovingUtility.FloatLerpContainer()
+        {
+            Duration = 1f,
+            StartValue = 0,
+            TargetValue = 1
+        };
+        
+        Spawner.Instance.RemoveFromWaiting(this);
+        
+        StartCoroutine(MovingUtility.LerpFloat(despawnAnim, DespawnAnimation, ()  => Destroy(gameObject)));
+        Debug.Log(despawnAnim.Duration);
     }
 
-    public bool Active()
+    private void SpawnAnimation(float delta)
     {
-        return gameObject.activeInHierarchy;
+        transform.localScale = Vector3.one * _spawnAnim.Evaluate(delta);
+    }
+
+    private void DespawnAnimation(float delta)
+    {
+        transform.localScale = Vector3.one * _depawnAnim.Evaluate(delta);
     }
 }

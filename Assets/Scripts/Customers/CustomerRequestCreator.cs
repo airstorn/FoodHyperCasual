@@ -19,7 +19,6 @@ public class CustomerRequestCreator : MonoBehaviour
     private void Awake()
     {
         _ingridientsCash = Resources.LoadAll<GameObject>("ingridients/");
-        Debug.Log(_ingridientsCash.Length);
     }
 
     public void CreateRequest(ref BurgerData data, Difficulty difficulty)
@@ -31,6 +30,17 @@ public class CustomerRequestCreator : MonoBehaviour
         {
             data.AddIngridient(ing);
         }
+    }
+
+    public void ClearRequest(ref BurgerData data)
+    {
+        foreach (var ingridient in data._ingridients)
+        {
+            var ing = ingridient as IEditable;
+            Destroy(ing.GetTransform().gameObject);
+        }
+        
+        data._ingridients.Clear();
     }
 
     private IIngridient[] FillBurger(Difficulty dif)
