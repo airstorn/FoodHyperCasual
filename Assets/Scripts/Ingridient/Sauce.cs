@@ -37,7 +37,7 @@ public class Sauce : InputMovableBehaviour, ISpawnable
             TargetValue = 1
         };
         
-        StartCoroutine(MovingUtility.LerpFloat(spawnSize, SpawnAnimation));
+        MovingUtility.LerpFloat(spawnSize, SpawnAnimation);
     }
 
     public void Despawn()
@@ -51,8 +51,12 @@ public class Sauce : InputMovableBehaviour, ISpawnable
         
         Spawner.Instance.RemoveFromWaiting(this);
         
-        StartCoroutine(MovingUtility.LerpFloat(despawnAnim, DespawnAnimation, ()  => Destroy(gameObject)));
-        Debug.Log(despawnAnim.Duration);
+        MovingUtility.LerpFloat(despawnAnim, DespawnAnimation, DespawnEnd);
+    }
+
+    private void DespawnEnd()
+    {
+        Destroy(gameObject);
     }
     
     private void DespawnAnimation(float delta)

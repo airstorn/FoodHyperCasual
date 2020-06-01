@@ -49,13 +49,13 @@ public class RatingState : MonoBehaviour, IGameState
             TargetRotation = new Vector3(0, 180)
         };
         
-        StartCoroutine(MovingUtility.MoveTo(cameraData, CameraMove));
-        StartCoroutine(MovingUtility.Rotate(burgerRotData, BurgerRotation));
+        MovingUtility.MoveTo(cameraData, CameraMove);
+        MovingUtility.Rotate(burgerRotData, BurgerRotation);
         
         var rating = BurgerComparer.Compare(_customerSpawner.Customer.Burger.GetData(), _logic.PlayerBurger.GetData());
-        Menu.Instance.SwitchPage(_ui, rating);
+        Menu.Instance.SwitchPage<RatingPage, float>(rating);
         
-        yield return StartCoroutine(MovingUtility.MoveTo(burgerPosData, BurgerMove));
+        yield return MovingUtility.MoveTo(burgerPosData, BurgerMove);
         
         _particles.Play();
         activatAction?.Invoke();
@@ -100,9 +100,9 @@ public class RatingState : MonoBehaviour, IGameState
             TargetRotation = new Vector3(0, 0)
         };
         
-        StartCoroutine(MovingUtility.MoveTo(cameraData, CameraMove));
-        StartCoroutine(MovingUtility.MoveTo(burgerPosData, BurgerMove));
-        StartCoroutine(MovingUtility.Rotate(burgerRotData, BurgerRotation));
+        MovingUtility.MoveTo(cameraData, CameraMove);
+        MovingUtility.MoveTo(burgerPosData, BurgerMove);
+        MovingUtility.Rotate(burgerRotData, BurgerRotation);
         
         callback?.Invoke();
     }

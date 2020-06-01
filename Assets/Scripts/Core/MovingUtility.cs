@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class MovingUtility 
+public static class MovingUtility
 {
+    private static MonoBehaviour _routinesObject;
     public struct MovingContainer
     {
         public Vector3 OriginPos;
@@ -25,8 +26,34 @@ public static class MovingUtility
         public float TargetValue;
         public float Duration;
     }
+
+    public static Coroutine MoveTo(MovingContainer data, Action<Vector3> callback)
+    {
+        CheckForObject();
+        return _routinesObject.StartCoroutine(MoveToRoutine(data, callback));
+    }
     
-    public static IEnumerator MoveTo(MovingContainer data, Action<Vector3> callback)
+    public static Coroutine Rotate(RotationContainer data, Action<Quaternion> callback)
+    {
+        CheckForObject();
+        return _routinesObject.StartCoroutine(RotateRoutine(data, callback));
+    } 
+    
+    public static Coroutine LerpFloat(FloatLerpContainer data, Action<float> callback, Action endCallback = null)
+    {
+        CheckForObject();
+        return _routinesObject.StartCoroutine(LerpFloatRoutine(data, callback, endCallback));
+    }
+
+    private static void CheckForObject()
+    {
+        if (!_routinesObject)
+        {
+            _routinesObject = new GameObject().AddComponent<CoroutineHelper>();
+        }
+    }
+
+    public static IEnumerator MoveToRoutine(MovingContainer data, Action<Vector3> callback)
     {
         float elapsed = 0;
         while (elapsed < data.Duration)
@@ -43,7 +70,7 @@ public static class MovingUtility
         callback.Invoke(data.OriginPos);
     }
 
-    public static IEnumerator Rotate(RotationContainer data, Action<Quaternion> callback)
+    public static IEnumerator RotateRoutine(RotationContainer data, Action<Quaternion> callback)
     {
         float elapsed = 0;
         while (elapsed < data.Duration)
@@ -60,7 +87,7 @@ public static class MovingUtility
         callback?.Invoke(data.CurrentRotation);
     }
 
-    public static IEnumerator LerpFloat(FloatLerpContainer data, Action<float> callback, Action endCallback = null)
+    public static IEnumerator LerpFloatRoutine(FloatLerpContainer data, Action<float> callback, Action endCallback = null)
     {
         float elapsed = 0;
         while (elapsed < data.Duration)

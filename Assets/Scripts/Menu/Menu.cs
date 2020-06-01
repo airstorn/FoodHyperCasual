@@ -31,14 +31,13 @@ namespace GameStates
          for (int i = 0; i < _pages.Length; i++)
          {
             _pages[i].Hide();
+            Debug.Log(_pages[i]);
          }
-         
-         SwitchPage(_defaultPage, this);
       }
 
-      public void SwitchPage<T>(GameObject page, T args)
+      public void SwitchPage<TPage, TArgs>(TArgs args) where TPage : IMenuPagable
       {
-         var pageElement = GetPage(page);
+         var pageElement = GetPage<TPage>();
          foreach (var tempPage in _pages)
          {
             if (tempPage == pageElement)
@@ -51,9 +50,9 @@ namespace GameStates
             }
          }
       } 
-      public void SwitchPage(GameObject page)
+      public void SwitchPage<T>() where T : IMenuPagable
       {
-         var pageElement = GetPage(page);
+         var pageElement = GetPage<T>();
          foreach (var tempPage in _pages)
          {
             if (tempPage == pageElement)
@@ -67,14 +66,14 @@ namespace GameStates
          }
       }
 
-      public void OpenPageOverlayed<T>(GameObject page, T args)
-      {
-         GetPage(page).Show(args);
-      }
+      // public void OpenPageOverlayed<T>(GameObject page, T args)
+      // {
+      //    GetPage<T>().Show(args);
+      // }
 
-      private IMenuPagable GetPage(GameObject page)
+      private IMenuPagable GetPage<T>() where T : IMenuPagable
       {
-         return page.GetComponent<IMenuPagable>();
+         return _pages.OfType<T>().First();
       }
    }
 }

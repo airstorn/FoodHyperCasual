@@ -92,70 +92,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54aa59d42f51bdc45ac522b0ef55839f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _burgerObject: {fileID: 0}
   _spawnCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 9.246696
-      outSlope: 9.246696
-      tangentMode: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.69657266
-    - serializedVersion: 3
-      time: 0.15899715
-      value: 1.5016375
-      inSlope: -0.013525517
-      outSlope: -0.013525517
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 1
-    - serializedVersion: 3
-      time: 0.33525595
-      value: 0.76657933
-      inSlope: 0.043751113
-      outSlope: 0.043751113
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 1
-    - serializedVersion: 3
-      time: 0.49145472
-      value: 1.1840415
-      inSlope: -0.0056157885
-      outSlope: -0.0056157885
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 1
-    - serializedVersion: 3
-      time: 0.66919196
-      value: 0.8740748
-      inSlope: -0.01277292
-      outSlope: -0.01277292
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 1
-    - serializedVersion: 3
-      time: 0.8292124
-      value: 1.0365343
-      inSlope: -0.010234762
-      outSlope: -0.010234762
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 1
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0

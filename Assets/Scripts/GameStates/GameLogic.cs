@@ -8,6 +8,7 @@ public class GameLogic : MonoBehaviour
 {
     [SerializeField] private GameObject _playerBurgerObject;
     [SerializeField] private Spawner _spawner;
+    [SerializeField] private bool _debug;
 
     public Spawner IngridientSpawner => _spawner;
     public IBurgerViewable PlayerBurger => _playerBurger;
@@ -57,6 +58,6 @@ public class GameLogic : MonoBehaviour
 
     private void ChangeDebug()
     {
-        Debug.Log(_currentState);
+        if(_debug) Debug.Log(_currentState);
     }
 }

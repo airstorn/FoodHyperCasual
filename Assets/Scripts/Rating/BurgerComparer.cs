@@ -10,7 +10,6 @@ public static class BurgerComparer
 
         if (comparable._ingridients.Count == original._ingridients.Count)
         {
-            Debug.Log("same size");
             for (int i = 0; i < original._ingridients.Count; i++)
             {
                 Debug.Log(original._ingridients[i].GetType() + " - " + comparable._ingridients[i]);

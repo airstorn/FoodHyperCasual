@@ -6,35 +6,50 @@ public class CustomerSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject _customerTemplate;
     [SerializeField] private Transform _spawnOrigin;
-    public Customer Customer => _currentCustomer;
+
+    public Customer Customer
+    {
+        get
+        {
+            if (_currentCustomer == null)
+            {
+                return CreateCustomer();
+            }
+            else
+            {
+                return _currentCustomer;
+            }
+        }
+    }
     
     private Customer _currentCustomer;
     
     public IEnumerator SpawnCustomer()
     {
-        if (!_currentCustomer)
-        {
-            var customer = Instantiate(_customerTemplate);
-            customer.transform.position = _spawnOrigin.position;
-            _currentCustomer = customer.GetComponent<Customer>();
-        }
+        Customer.ClearRequest();
         
-        _currentCustomer.ClearRequest();
-        
-        _currentCustomer.SetVisible(true);
-        _currentCustomer.SetRandomSkin();
+        Customer.SetVisible(true);
+        Customer.SetRandomSkin();
         
         yield return new WaitForSeconds(1);
         
-        _currentCustomer.CreateBurger();
+        Customer.CreateBurger();
         
         yield return new WaitForSeconds(0.5f);
         
-        yield return StartCoroutine(_currentCustomer.AnimateRequest());
+        yield return StartCoroutine(Customer.AnimateRequest());
     }
 
     public void HideCustomer()
     {
-        _currentCustomer.SetVisible(false);
+        Customer.SetVisible(false);
+    }
+
+    private Customer CreateCustomer()
+    {
+        var customer = Instantiate(_customerTemplate);
+        customer.transform.position = _spawnOrigin.position;
+        _currentCustomer = customer.GetComponent<Customer>();
+        return _currentCustomer;
     }
 }

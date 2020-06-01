@@ -29,7 +29,7 @@ public class SpawnableIngridient : InputMovableBehaviour, IIngridient, ISpawnabl
             TargetValue = 1
         };
         
-        StartCoroutine(MovingUtility.LerpFloat(spawnSize, SpawnAnimation));
+        MovingUtility.LerpFloat(spawnSize, SpawnAnimation);
     }
 
     public void Despawn()
@@ -43,7 +43,7 @@ public class SpawnableIngridient : InputMovableBehaviour, IIngridient, ISpawnabl
         
         Spawner.Instance.RemoveFromWaiting(this);
         
-        StartCoroutine(MovingUtility.LerpFloat(despawnAnim, DespawnAnimation, ()  => Destroy(gameObject)));
+         MovingUtility.LerpFloat(despawnAnim, DespawnAnimation, ()  => Destroy(gameObject));
     }
 
     private void SpawnAnimation(float delta)

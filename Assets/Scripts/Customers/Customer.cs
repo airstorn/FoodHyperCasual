@@ -48,7 +48,7 @@ public class Customer : MonoBehaviour
             TargetRotation = new Vector3(-45, 0)
         };
         
-        yield return StartCoroutine(MovingUtility.Rotate(burgerRot, RotateBurger));
+        yield return MovingUtility.Rotate(burgerRot, RotateBurger);
 
         
         var objs = _customerBurger.GetData()._ingridients.Select(obj => (IEditable) obj).ToArray();
@@ -71,7 +71,7 @@ public class Customer : MonoBehaviour
                 TargetPos = sizedPosition
             };
             
-           yield return StartCoroutine(MovingUtility.MoveTo(data, delegate(Vector3 pos) { objs[i].GetTransform().position = pos; }));
+           yield return MovingUtility.MoveTo(data, delegate(Vector3 pos) { objs[i].GetTransform().position = pos; });
         }
     }
 

@@ -21,8 +21,15 @@ public class Spawner : MonoBehaviour
 
    public IEnumerator SpawnElements(params ISpawnable[] ingridients)
    {
-      _schedule =  objs.Select(el => Instantiate(el).GetComponent<ISpawnable>()).ToList();
-
+      _schedule =  objs.Select(el =>
+      {
+         var v = Instantiate(el);
+         
+         v.SetActive(false);
+         
+         return v.GetComponent<ISpawnable>();
+      }).ToList();
+      
 
       for (int i = 0; i < _spawnZones.Count; i++)
       {
@@ -70,7 +77,6 @@ public class Spawner : MonoBehaviour
       
       foreach (var spawnZone in _spawnZones)
       { 
-         Debug.Log(spawnZone.GetHoldedSpawnable());
          if(spawnZone.IsEmpty() == false) spawnZone.GetHoldedSpawnable().Despawn();
       }
    }

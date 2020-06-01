@@ -14,7 +14,6 @@ public class PressPlay : MonoBehaviour
     public void Subscribe()
     {
         InputHandler.OnClick += Play;
-        OnPlay += Unsubscribe;
         _pressPlayObject.SetActive(true);
     }  
     public void Unsubscribe()
@@ -28,6 +27,7 @@ public class PressPlay : MonoBehaviour
         if (_events.currentSelectedGameObject == null)
         {
             OnPlay?.Invoke();
+            Unsubscribe();
         }
     }
 }

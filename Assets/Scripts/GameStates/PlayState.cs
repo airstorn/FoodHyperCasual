@@ -27,22 +27,17 @@ namespace GameStates
         
         public void Deactivate(Action callback)
         {
-            StartCoroutine(HideCustomer(callback));
             _ingridientsSpawner.Clear();
-
+            _customerData.Customer.SetVisible(false);
+            callback?.Invoke();
         }
 
         public void Activate(Action activatAction)
         {
             _playAction.Subscribe();
-            Menu.Instance.SwitchPage(_ui, this); 
+            Menu.Instance.SwitchPage<MenuPage>(); 
 
             ClearPlayerBurger();
-
-            // StartCoroutine(Createlevel(activatAction));
-            PressPlay.OnPlay += OnPlay;
-            Debug.Log("sub");
-            
         }
 
         private void OnPlay()
@@ -54,7 +49,8 @@ namespace GameStates
         {
             _ingridientsSpawner.Clear();
             _mover.Unsubscribe();
-            
+            Menu.Instance.SwitchPage<GamePage>(); 
+
             
             PlaceBun(_firstBun);
             
@@ -68,7 +64,13 @@ namespace GameStates
             _mover.Subscribe();
             callback?.Invoke();
         }
-        
+
+        private void Start()
+        {
+            PressPlay.OnPlay += OnPlay;
+
+        }
+
         private void OnValidate()
         {
             if (_playerBurgerObject.GetComponent<IBurgerViewable>() == null)
@@ -96,14 +98,6 @@ namespace GameStates
             var inst = Instantiate(obj);
             inst.SetActive(true);
             _logic.PlayerBurger.GetData().AddIngridient(inst.GetComponent<IIngridient>());
-        }
-
-       
-        private IEnumerator HideCustomer(Action ac)
-        {
-            _customerData.Customer.SetVisible(false);
-            yield return new WaitForSeconds(1);
-            ac.Invoke();
         }
     }
 }
