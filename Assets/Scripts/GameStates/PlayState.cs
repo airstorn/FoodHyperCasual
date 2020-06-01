@@ -15,9 +15,8 @@ namespace GameStates
         [SerializeField] private CustomerSpawner _customerData;
         [SerializeField] private GameObject _firstBun;
         [SerializeField] private GameObject _secondBun;
-        
-
-  
+        [SerializeField] private SelectableMover _mover;
+        [SerializeField] private PressPlay _playAction;
 
         public void Confirm()
         {
@@ -35,15 +34,27 @@ namespace GameStates
 
         public void Activate(Action activatAction)
         {
-            StartCoroutine(Createlevel(activatAction));
+            _playAction.Subscribe();
+            Menu.Instance.SwitchPage(_ui, this); 
+
+            ClearPlayerBurger();
+
+            // StartCoroutine(Createlevel(activatAction));
+            PressPlay.OnPlay += OnPlay;
+            Debug.Log("sub");
+            
+        }
+
+        private void OnPlay()
+        {
+            StartCoroutine(Createlevel(null));
         }
 
         private IEnumerator Createlevel(Action callback)
         {
             _ingridientsSpawner.Clear();
-            Menu.Instance.SwitchPage(_ui, this); 
+            _mover.Unsubscribe();
             
-            ClearPlayerBurger();
             
             PlaceBun(_firstBun);
             
@@ -53,6 +64,8 @@ namespace GameStates
             
             yield return _ingridientsSpawner.SpawnElements(null);
             
+
+            _mover.Subscribe();
             callback?.Invoke();
         }
         

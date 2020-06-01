@@ -23,13 +23,22 @@ public class SelectableMover : MonoBehaviour
     private IInteractableZone _defaultZone;
     private Coroutine _movingRoutine;
     private Vector3 _movingPos;
+
+    private void Awake()
+    {
+        _defaultZone = new EmptyZone(gameObject);
+    }
+
     
-    private void Start()
+    public void Subscribe()
     {
         InputHandler.OnClick += ClickHandler;
         InputHandler.OnTouchMoved += SetMovingOffset;
-        
-        _defaultZone = new EmptyZone(gameObject);
+    }
+    public void Unsubscribe()
+    {
+        InputHandler.OnClick -= ClickHandler;
+        InputHandler.OnTouchMoved -= SetMovingOffset;
     }
 
     private void SetMovingOffset(Vector3 obj)

@@ -70,6 +70,7 @@ public class Spawner : MonoBehaviour
       
       foreach (var spawnZone in _spawnZones)
       { 
+         Debug.Log(spawnZone.GetHoldedSpawnable());
          if(spawnZone.IsEmpty() == false) spawnZone.GetHoldedSpawnable().Despawn();
       }
    }

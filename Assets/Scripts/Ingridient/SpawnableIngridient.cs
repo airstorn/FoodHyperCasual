@@ -44,7 +44,6 @@ public class SpawnableIngridient : InputMovableBehaviour, IIngridient, ISpawnabl
         Spawner.Instance.RemoveFromWaiting(this);
         
         StartCoroutine(MovingUtility.LerpFloat(despawnAnim, DespawnAnimation, ()  => Destroy(gameObject)));
-        Debug.Log(despawnAnim.Duration);
     }
 
     private void SpawnAnimation(float delta)

@@ -25,6 +25,7 @@ public abstract class IngridientSpawnZoneBase : MonoBehaviour, IIngridientSpawnZ
     private void Start()
     {
         _empty = new EmptySpawnable();
+        _ingridientTemplate = _empty;
     }
 
     public virtual void Spawn(ISpawnable spawnObject)

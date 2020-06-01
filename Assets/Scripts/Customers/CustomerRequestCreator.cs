@@ -63,10 +63,10 @@ public class CustomerRequestCreator : MonoBehaviour
         //         break;
         // }
 
-        ings.Add(CreateIngridientByType<Bun>());
+        ings.Add(CreateIngridientByType<BottomBun>());
         ings.Add(CreateIngridientByType<Steak>());
         ings.Add(CreateIngridientByType<SauceIngridient>());
-        ings.Add(CreateIngridientByType<Bun>());
+        ings.Add(CreateIngridientByType<UpperBun>());
         
         
 

@@ -37,6 +37,7 @@
           <e p="Core" t="Include">
             <e p="EmptySpawnable.cs" t="Include" />
             <e p="MovingUtility.cs" t="Include" />
+            <e p="PressPlay.cs" t="Include" />
           </e>
           <e p="Customers" t="Include">
             <e p="Customer.cs" t="Include" />
@@ -62,7 +63,7 @@
           <e p="IBurgerViewable.cs" t="Include" />
           <e p="IInteractableZone.cs" t="Include" />
           <e p="Ingridient" t="Include">
-            <e p="Bun.cs" t="Include" />
+            <e p="BottomBun.cs" t="Include" />
             <e p="Core" t="Include">
               <e p="ICookable.cs" t="Include" />
               <e p="IEditable.cs" t="Include" />
@@ -78,6 +79,7 @@
             <e p="SauceParticleTracker.cs" t="Include" />
             <e p="SpawnableIngridient.cs" t="Include" />
             <e p="Steak.cs" t="Include" />
+            <e p="UpperBun.cs" t="Include" />
           </e>
           <e p="IngridientZones" t="Include">
             <e p="IIngridientSpawnZone.cs" t="Include" />

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Ingridient;
 using UnityEngine;
 
-public class Bun : MonoBehaviour, IIngridient, IEditable
+public class BottomBun : MonoBehaviour, IIngridient, IEditable
 {
     [SerializeField] private AnimationCurve _spawnCurve;
     [SerializeField] private float _height = 0.016f;

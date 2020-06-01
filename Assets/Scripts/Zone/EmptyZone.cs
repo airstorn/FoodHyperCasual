@@ -77,8 +77,10 @@ public class EmptyZone : IInteractableZone
         body.useGravity = true;
 
         yield return new WaitForSeconds(_physicTime);
-      
-            
+        
+        if(!body)
+            yield break;
+
         body.useGravity = false;
         body.isKinematic = true;
 

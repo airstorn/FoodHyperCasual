@@ -43,7 +43,7 @@ public class Customer : MonoBehaviour
     {
         var burgerRot = new MovingUtility.RotationContainer()
         {
-            Duration = 0.3f,
+            Duration = 0.1f,
             CurrentRotation = _burgerOffset.rotation,
             TargetRotation = new Vector3(-45, 0)
         };
@@ -66,7 +66,7 @@ public class Customer : MonoBehaviour
 
             var data = new MovingUtility.MovingContainer()
             {
-                Duration = 0.1f,
+                Duration = 0.08f,
                 OriginPos = objs[i].GetTransform().position,
                 TargetPos = sizedPosition
             };

@@ -57,5 +57,6 @@ public class GameLogic : MonoBehaviour
 
     private void ChangeDebug()
     {
+        Debug.Log(_currentState);
     }
 }
