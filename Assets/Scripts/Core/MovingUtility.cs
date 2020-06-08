@@ -53,7 +53,7 @@ public static class MovingUtility
         }
     }
 
-    public static IEnumerator MoveToRoutine(MovingContainer data, Action<Vector3> callback)
+    private static IEnumerator MoveToRoutine(MovingContainer data, Action<Vector3> callback)
     {
         float elapsed = 0;
         while (elapsed < data.Duration)
@@ -70,7 +70,7 @@ public static class MovingUtility
         callback.Invoke(data.OriginPos);
     }
 
-    public static IEnumerator RotateRoutine(RotationContainer data, Action<Quaternion> callback)
+    private static IEnumerator RotateRoutine(RotationContainer data, Action<Quaternion> callback)
     {
         float elapsed = 0;
         while (elapsed < data.Duration)
@@ -87,7 +87,7 @@ public static class MovingUtility
         callback?.Invoke(data.CurrentRotation);
     }
 
-    public static IEnumerator LerpFloatRoutine(FloatLerpContainer data, Action<float> callback, Action endCallback = null)
+    private static IEnumerator LerpFloatRoutine(FloatLerpContainer data, Action<float> callback, Action endCallback = null)
     {
         float elapsed = 0;
         while (elapsed < data.Duration)

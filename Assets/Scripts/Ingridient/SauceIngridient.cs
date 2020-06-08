@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Ingridient;
 using UnityEngine;
 
-public class SauceIngridient : MonoBehaviour, IIngridient, IEditable
+public class SauceIngridient : MonoBehaviour, IIngridient, IEditable, IRatable
 {
     [SerializeField] private float _height = 0.01f;
     public float GetHeight()
@@ -19,5 +19,10 @@ public class SauceIngridient : MonoBehaviour, IIngridient, IEditable
     public Transform GetTransform()
     {
         return transform;
+    }
+
+    public float GetRating()
+    {
+        return 1;
     }
 }

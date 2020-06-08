@@ -70,8 +70,19 @@ public class Customer : MonoBehaviour
                 OriginPos = objs[i].GetTransform().position,
                 TargetPos = sizedPosition
             };
+
+            var rotData = new MovingUtility.RotationContainer()
+            {
+                Duration = data.Duration,
+                CurrentRotation = objs[i].GetTransform().rotation,
+                TargetRotation = new Vector3(0, 0, -15)
+            };
+
             
-           yield return MovingUtility.MoveTo(data, delegate(Vector3 pos) { objs[i].GetTransform().position = pos; });
+            yield return MovingUtility.MoveTo(data, 
+                delegate(Vector3 pos) { objs[i].GetTransform().position = pos; });
+            yield return MovingUtility.Rotate(rotData,
+                delegate(Quaternion quaternion) { objs[i].GetTransform().localRotation = quaternion; });
         }
     }
 

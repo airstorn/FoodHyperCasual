@@ -1,4 +1,4 @@
-﻿using System;
+﻿  using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,6 @@ namespace GameStates
       [SerializeField] private GameObject[] _menuObjects;
       [SerializeField] private EventSystem _uiSystem;
       private IMenuPagable[] _pages;
-
 
       public static Menu Instance;
 

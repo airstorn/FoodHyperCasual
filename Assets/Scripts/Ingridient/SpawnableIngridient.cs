@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using Ingridient;
 using UnityEngine;
 
-public class SpawnableIngridient : InputMovableBehaviour, IIngridient, ISpawnable
+public class SpawnableIngridient : InputMovableBehaviour, IIngridient, ISpawnable, IRatable
 {  
     [SerializeField] private bool _placed = false;
     [SerializeField] private float _height = 0.05f;
@@ -45,6 +45,11 @@ public class SpawnableIngridient : InputMovableBehaviour, IIngridient, ISpawnabl
         
          MovingUtility.LerpFloat(despawnAnim, DespawnAnimation, ()  => Destroy(gameObject));
     }
+    
+    public virtual float GetRating()
+    {
+        return 1;
+    }
 
     private void SpawnAnimation(float delta)
     {
@@ -55,4 +60,6 @@ public class SpawnableIngridient : InputMovableBehaviour, IIngridient, ISpawnabl
     {
         transform.localScale = Vector3.one * _depawnAnim.Evaluate(delta);
     }
+
+  
 }

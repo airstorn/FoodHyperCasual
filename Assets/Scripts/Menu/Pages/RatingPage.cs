@@ -12,14 +12,19 @@ public class RatingPage : PageBasement
     [SerializeField] private CanvasGroup _bg;
     [SerializeField] private Image _rating;
     [SerializeField] private Button _continueButton;
+    [SerializeField] private Text _percentsText;
 
     public override void Show<T>(T args)
     {
         base.Show(args);
         _bg.gameObject.SetActive(true);
         _continueButton.gameObject.SetActive(false);
+
+        _rating.fillAmount = 0;
+        _percentsText.text = 0 + "%";
         
         var f = float.Parse(args.ToString());
+        Debug.Log(f);
 
         StartCoroutine(AnimateRating(f));
         
@@ -32,15 +37,30 @@ public class RatingPage : PageBasement
 
     private IEnumerator AnimateRating(float rating)
     {
-        yield return StartCoroutine(AnimateFloat(0, 1, 1, BackGroundAlpha));
-        yield return StartCoroutine(AnimateFloat(0, rating, 2, Rating));
-
+        MovingUtility.FloatLerpContainer bg = new MovingUtility.FloatLerpContainer()
+        {
+            Duration = 1,
+            StartValue = 0,
+            TargetValue = 1
+        }; 
+        
+        MovingUtility.FloatLerpContainer lerp = new MovingUtility.FloatLerpContainer()
+        {
+            Duration = 1,
+            StartValue = 0,
+            TargetValue = rating
+        };
+        
+        yield return MovingUtility.LerpFloat(bg, BackGroundAlpha);
         _continueButton.gameObject.SetActive(true);
+        yield return MovingUtility.LerpFloat(lerp, Rating);
+
     }
 
     private void Rating(float obj)
     {
         _rating.fillAmount = obj;
+        _percentsText.text = (int)(obj * 100) + "%";
     }
 
  
@@ -55,18 +75,5 @@ public class RatingPage : PageBasement
     private void BackGroundAlpha(float alpha)
     {
         _bg.alpha = alpha;
-    }
-
-    private IEnumerator AnimateFloat(float value, float target, int duration, Action<float> callback)
-    {
-        float time = 0;
-        while (time < duration)
-        {
-            value = Mathf.Lerp(value, target, time / duration);
-            callback?.Invoke(value);
-            
-            time += Time.deltaTime;
-            yield return null;
-        }
     }
 }

@@ -70,7 +70,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 501ebc28c3578244ba1f3e2e38af980f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7b4e746d34ca1124d80c90410c8e1209, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.94509804}
   m_FlipX: 0
   m_FlipY: 0
@@ -238,7 +238,7 @@ MonoBehaviour:
   _anim: {fileID: 8023861512163330535}
   _burgerOffset: {fileID: 2955119255818311401}
   _rotationSpeed: 0.5
-  _size: {x: 0.5, y: 0.3}
+  _size: {x: 0.5, y: 0}
   _skins:
   - {fileID: 4046779943292636797}
   - {fileID: 288769047410494189}

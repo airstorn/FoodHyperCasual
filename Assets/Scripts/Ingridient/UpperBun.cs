@@ -41,4 +41,5 @@ public class UpperBun : MonoBehaviour, IIngridient, IEditable, ISpawnable
     public void Despawn()
     {
     }
+
 }

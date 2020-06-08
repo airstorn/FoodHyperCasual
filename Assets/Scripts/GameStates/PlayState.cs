@@ -8,8 +8,6 @@ namespace GameStates
 {
     public class PlayState : MonoBehaviour, IGameState
     {
-        [SerializeField] private GameLogic _logic;
-        [SerializeField] private GameObject _ui;
         [SerializeField] private GameObject _playerBurgerObject;
         [SerializeField] private Spawner _ingridientsSpawner;
         [SerializeField] private CustomerSpawner _customerData;
@@ -17,17 +15,19 @@ namespace GameStates
         [SerializeField] private GameObject _secondBun;
         [SerializeField] private SelectableMover _mover;
         [SerializeField] private PressPlay _playAction;
+        [SerializeField] private GameObject _nextButton;
 
         public void Confirm()
         {
             PlaceBun(_secondBun);
             
-            _logic.ChangeState<RatingState>();
+            GameLogic.Instance.ChangeState<RatingState>();
         }
         
         public void Deactivate(Action callback)
         {
             _ingridientsSpawner.Clear();
+            GameLogic.Instance.PlayerBurger.GetData().OnIngridientAdded -= NextButtonUnlock;
             _customerData.Customer.SetVisible(false);
             callback?.Invoke();
         }
@@ -36,8 +36,16 @@ namespace GameStates
         {
             _playAction.Subscribe();
             Menu.Instance.SwitchPage<MenuPage>(); 
-
+            _nextButton.SetActive(false);
+            
+            
+            
             ClearPlayerBurger();
+        }
+
+        private void NextButtonUnlock(IIngridient ingridient)
+        {
+            _nextButton.SetActive(true);
         }
 
         private void OnPlay()
@@ -53,6 +61,8 @@ namespace GameStates
 
             
             PlaceBun(_firstBun);
+            
+            GameLogic.Instance.PlayerBurger.GetData().OnIngridientAdded += NextButtonUnlock;
             
             yield return StartCoroutine(_customerData.SpawnCustomer());
             
@@ -81,23 +91,23 @@ namespace GameStates
 
         private void ClearPlayerBurger()
         {
-            if(_logic.PlayerBurger.GetData()._ingridients == null)
+            if(GameLogic.Instance.PlayerBurger.GetData()._ingridients == null)
                 return;
             
-            foreach (var ingridient in _logic.PlayerBurger.GetData()._ingridients)
+            foreach (var ingridient in GameLogic.Instance.PlayerBurger.GetData()._ingridients)
             {
                 var editable = ingridient as IEditable;
                 if (editable != null) Destroy(editable.GetTransform().gameObject);
             }
             
-            _logic.PlayerBurger.GetData()._ingridients.Clear();
+            GameLogic.Instance.PlayerBurger.GetData()._ingridients.Clear();
         }
         
         private void PlaceBun(GameObject obj)
         {
             var inst = Instantiate(obj);
             inst.SetActive(true);
-            _logic.PlayerBurger.GetData().AddIngridient(inst.GetComponent<IIngridient>());
+            GameLogic.Instance.PlayerBurger.GetData().AddIngridient(inst.GetComponent<IIngridient>());
         }
     }
 }
