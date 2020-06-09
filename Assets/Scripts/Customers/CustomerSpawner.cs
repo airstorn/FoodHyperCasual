@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,7 +22,12 @@ public class CustomerSpawner : MonoBehaviour
             }
         }
     }
-    
+
+    private void Start()
+    {
+        SpawnCustomer();
+    }
+
     private Customer _currentCustomer;
     
     public IEnumerator SpawnCustomer()

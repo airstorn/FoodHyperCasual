@@ -79,7 +79,7 @@ public class Customer : MonoBehaviour
             };
 
             
-            yield return MovingUtility.MoveTo(data, 
+            MovingUtility.MoveTo(data, 
                 delegate(Vector3 pos) { objs[i].GetTransform().position = pos; });
             yield return MovingUtility.Rotate(rotData,
                 delegate(Quaternion quaternion) { objs[i].GetTransform().localRotation = quaternion; });

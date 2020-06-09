@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb2880977fd314402a0e40e004a8e2bd, type: 3}
+  m_Name: EasyBurger
+  m_EditorClassIdentifier: 
+  _burger:
+  - {fileID: 3315265144826833324, guid: 50f2924e484e58442bc42a2ecb22e9be, type: 3}
+  - {fileID: 3985782569148688113, guid: b75d12df92a28aa498c9c5a2a06056ed, type: 3}
+  - {fileID: 3985782569148688113, guid: b75d12df92a28aa498c9c5a2a06056ed, type: 3}
+  - {fileID: 4336737903500227120, guid: 7879c68282d416f4e994a0f519da8d34, type: 3}
+  - {fileID: 533939186828064384, guid: 8c00feaa1728a2e4c88e57caddbeb58b, type: 3}

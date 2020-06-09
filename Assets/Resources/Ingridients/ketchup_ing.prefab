@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4336737903500227135}
   - component: {fileID: 4336737903500227121}
   - component: {fileID: 4336737903500227134}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Ketchup_ing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4336737903500227120}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.6021049, y: 1.034, z: -5.908776}
+  m_LocalPosition: {x: 0, y: 0.132, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
