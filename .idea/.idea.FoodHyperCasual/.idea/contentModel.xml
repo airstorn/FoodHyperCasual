@@ -4,6 +4,26 @@
     <e p="$PROJECT_DIR$" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
+        <e p="FacebookSDK" t="Include">
+          <e p="Examples" t="Include">
+            <e p="Scripts" t="Include">
+              <e p="ConsoleBase.cs" t="Include" />
+              <e p="LogView.cs" t="Include" />
+              <e p="MenuBase.cs" t="Include" />
+              <e p="SubMenus" t="Include">
+                <e p="AccessTokenMenu.cs" t="Include" />
+                <e p="AppEvents.cs" t="Include" />
+                <e p="AppLinks.cs" t="Include" />
+                <e p="AppRequests.cs" t="Include" />
+                <e p="DialogShare.cs" t="Include" />
+                <e p="GraphRequest.cs" t="Include" />
+                <e p="MainMenu.cs" t="Include" />
+                <e p="Pay.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="link.xml" t="Include" />
+        </e>
         <e p="Scripts" t="Include">
           <e p="AimingAssets" t="Include">
             <e p="Aimer.cs" t="Include" />
@@ -37,7 +57,7 @@
             <e p="CoroutineHelper.cs" t="Include" />
             <e p="EmptySpawnable.cs" t="Include" />
             <e p="IBurgerLoader.cs" t="Include" />
-            <e p="ILevelCountable.cs" t="Include" />
+            <e p="ILevelListener.cs" t="Include" />
             <e p="MovingUtility.cs" t="Include" />
             <e p="PressPlay.cs" t="Include" />
           </e>
@@ -67,6 +87,7 @@
           <e p="IInteractableZone.cs" t="Include" />
           <e p="Ingridient" t="Include">
             <e p="BottomBun.cs" t="Include" />
+            <e p="Cheese.cs" t="Include" />
             <e p="Core" t="Include">
               <e p="ICookable.cs" t="Include" />
               <e p="IEditable.cs" t="Include" />
@@ -100,6 +121,10 @@
             <e p="ItemAnimationsObject.cs" t="Include" />
             <e p="ItemLogic.cs" t="Include" />
             <e p="ItemObject.cs" t="Include" />
+          </e>
+          <e p="Level" t="Include">
+            <e p="LevelHeader.cs" t="Include" />
+            <e p="LevelManager.cs" t="Include" />
           </e>
           <e p="Menu" t="Include">
             <e p="InteractionZones" t="Include">

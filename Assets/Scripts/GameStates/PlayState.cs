@@ -17,6 +17,7 @@ namespace GameStates
         [SerializeField] private PressPlay _playAction;
         [SerializeField] private GameObject _nextButton;
 
+        
         public void Confirm()
         {
             PlaceBun(_secondBun);
@@ -37,8 +38,6 @@ namespace GameStates
             _playAction.Subscribe();
             Menu.Instance.SwitchPage<MenuPage>(); 
             _nextButton.SetActive(false);
-            
-            
             
             ClearPlayerBurger();
         }
@@ -78,7 +77,6 @@ namespace GameStates
         private void Start()
         {
             PressPlay.OnPlay += OnPlay;
-
         }
 
         private void OnValidate()

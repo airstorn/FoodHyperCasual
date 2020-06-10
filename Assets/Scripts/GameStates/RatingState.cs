@@ -13,6 +13,8 @@ public class RatingState : MonoBehaviour, IGameState
     [SerializeField] private MovingRails _cameraMovement;
     [SerializeField] private MovingRails _burgerMovement;
 
+    private LevelManager _levelManager;
+
     [Serializable]
     public struct MovingRails
     {
@@ -25,9 +27,41 @@ public class RatingState : MonoBehaviour, IGameState
     {
         StartCoroutine(AnimateActivate(activatAction));
     }
+    
+    public void Deactivate(Action callback)
+    {
+        var cameraData = new MovingUtility.MovingContainer()
+        {
+            OriginPos = _cameraMovement.To.position,
+            TargetPos = _cameraMovement.From.position,
+            Duration = 1f,
+        }; 
+        
+        var burgerPosData = new MovingUtility.MovingContainer()
+        {
+            OriginPos = _burgerMovement.To.position,
+            TargetPos = _burgerMovement.From.position,
+            Duration = 1.2f
+        };
+        
+        var burgerRotData = new MovingUtility.RotationContainer()
+        {
+            Duration = 0,
+            CurrentRotation = _burgerMovement.From.rotation,
+            TargetRotation = new Vector3(0, 0)
+        };
+        
+        MovingUtility.MoveTo(cameraData, CameraMove);
+        MovingUtility.MoveTo(burgerPosData, BurgerMove);
+        MovingUtility.Rotate(burgerRotData, BurgerRotation);
+        
+        callback?.Invoke();
+    }
 
     private IEnumerator AnimateActivate(Action activatAction)
     { 
+        _levelManager.SetLevel(_levelManager.CurrentLevel + 1);
+        
         var cameraData = new MovingUtility.MovingContainer()
         {
             OriginPos = _cameraMovement.From.position,
@@ -77,33 +111,8 @@ public class RatingState : MonoBehaviour, IGameState
         _burgerMovement.Target.position = burgerPos;
     }
 
-    public void Deactivate(Action callback)
+    private void Start()
     {
-        var cameraData = new MovingUtility.MovingContainer()
-        {
-            OriginPos = _cameraMovement.To.position,
-            TargetPos = _cameraMovement.From.position,
-            Duration = 1f,
-        }; 
-        
-        var burgerPosData = new MovingUtility.MovingContainer()
-        {
-            OriginPos = _burgerMovement.To.position,
-            TargetPos = _burgerMovement.From.position,
-            Duration = 1.2f
-        };
-        
-        var burgerRotData = new MovingUtility.RotationContainer()
-        {
-            Duration = 0,
-            CurrentRotation = _burgerMovement.From.rotation,
-            TargetRotation = new Vector3(0, 0)
-        };
-        
-        MovingUtility.MoveTo(cameraData, CameraMove);
-        MovingUtility.MoveTo(burgerPosData, BurgerMove);
-        MovingUtility.Rotate(burgerRotData, BurgerRotation);
-        
-        callback?.Invoke();
+        _levelManager = FindObjectOfType<LevelManager>();
     }
 }
