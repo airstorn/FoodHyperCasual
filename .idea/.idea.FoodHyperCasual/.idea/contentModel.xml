@@ -39,6 +39,9 @@
             <e p="ZombieHitting.cs" t="Include" />
             <e p="ZombieStateController.cs" t="Include" />
           </e>
+          <e p="Analytics" t="Include">
+            <e p="FacebookManager.cs" t="Include" />
+          </e>
           <e p="BurgerData.cs" t="Include" />
           <e p="CharacterMaker" t="Include">
             <e p="AimPoint.cs" t="Include" />
