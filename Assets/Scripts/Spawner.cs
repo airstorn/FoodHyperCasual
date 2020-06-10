@@ -29,10 +29,22 @@ public class Spawner : MonoBehaviour
    public IEnumerator SpawnElements()
    {
       var ings = GameLogic.Instance.CustomerRequest.GetData()._ingridients;
+
+      var spawns = ings.Where(ingridient => ingridient.GetObject() != null).Select(ingridient => ingridient.GetObject()).ToList();
       
+      spawns.ForEach(ingridient =>
+      {
+         var obj = Instantiate(ingridient);
+         obj.SetActive(false);
+         obj.layer = 9;
+         _schedule.Add(obj.GetComponent<ISpawnable>());
+      });
       
       for (int i = 0; i < _spawnZones.Count; i++)
       {
+         if(_schedule.Count == 0)
+            break;
+         
          _spawnZones[i].Spawn(_schedule[0]);
          _schedule.RemoveAt(0);
          yield return new WaitForSeconds(0.2f);
@@ -86,8 +98,9 @@ public class Spawner : MonoBehaviour
       GameLogic.Instance.PlayerBurger.IngridientAction -= PlaceScheduledIngridient;
    }
 
-   private ISpawnable GetCashedObject<T>(T Type) where T : ISpawnable
+   private IIngridient GetCashedObject<T>(T Type) where T : IIngridient
    {
+      Debug.Log(Type);
       return _cash.OfType<T>().First();
    }
 

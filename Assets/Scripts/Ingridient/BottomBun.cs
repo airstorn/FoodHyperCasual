@@ -29,7 +29,7 @@ public class BottomBun : MonoBehaviour, IIngridient, IEditable, ISpawnable
 
     public GameObject GetObject()
     {
-        return gameObject;
+        return null;
     }
 
     public Transform GetTransform()
