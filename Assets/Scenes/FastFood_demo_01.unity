@@ -15576,6 +15576,7 @@ MonoBehaviour:
   _playerBurgerObject: {fileID: 1930793283}
   _spawner: {fileID: 490814926}
   _debug: 0
+  _customer: {fileID: 1647290051}
 --- !u!4 &449383844
 Transform:
   m_ObjectHideFlags: 0
@@ -16448,12 +16449,6 @@ MonoBehaviour:
   - {fileID: 1867078628}
   - {fileID: 1068241357}
   - {fileID: 1008615884}
-  objs:
-  - {fileID: 4417691684442133818, guid: d47380bb1f58e454289d1f8ae02f9a53, type: 3}
-  - {fileID: 3913201727811287410, guid: b9e6ebe78c0f5b844aa7934c05106936, type: 3}
-  - {fileID: 3913201727811287410, guid: b9e6ebe78c0f5b844aa7934c05106936, type: 3}
-  - {fileID: 3985782569148688113, guid: b75d12df92a28aa498c9c5a2a06056ed, type: 3}
-  - {fileID: 3985782569148688113, guid: b75d12df92a28aa498c9c5a2a06056ed, type: 3}
 --- !u!4 &490814927
 Transform:
   m_ObjectHideFlags: 0

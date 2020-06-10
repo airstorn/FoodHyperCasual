@@ -30,7 +30,6 @@ namespace GameStates
          for (int i = 0; i < _pages.Length; i++)
          {
             _pages[i].Hide();
-            Debug.Log(_pages[i]);
          }
       }
 

@@ -67,7 +67,7 @@ namespace GameStates
             
             yield return new WaitForSeconds(0.2f);
             
-            yield return _ingridientsSpawner.SpawnElements(null);
+            yield return _ingridientsSpawner.SpawnElements();
             
 
             _mover.Subscribe();

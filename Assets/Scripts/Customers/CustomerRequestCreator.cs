@@ -2,13 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Core;
 using Ingridient;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 
-public class CustomerRequestCreator : MonoBehaviour
+public class CustomerRequestCreator : MonoBehaviour, ILevelListener
 {
+    [SerializeField] private Difficulty[] _difficultyPattern = new Difficulty[10];
+    private int _offset;
+    
     private IBurgerLoader _categoryGetter;
     
     public enum Difficulty
@@ -20,12 +24,13 @@ public class CustomerRequestCreator : MonoBehaviour
     private void Awake()
     {
         _categoryGetter = GetComponent<IBurgerLoader>();
+        FindObjectOfType<LevelManager>().Subscribe(this);
     }
 
-    public void CreateRequest(ref BurgerData data, Difficulty difficulty)
+    public void CreateRequest(ref BurgerData data)
     {
 
-        var burger = FillBurger(difficulty);
+        var burger = FillBurger(_difficultyPattern[_offset]);
 
         foreach (var ing in burger)
         {
@@ -57,5 +62,10 @@ public class CustomerRequestCreator : MonoBehaviour
         var obj = ing as IEditable;
         var spawnedObj = Instantiate(obj.GetTransform().gameObject);
         return spawnedObj.GetComponent<IIngridient>();
+    }
+
+    public void SetLevel(int level)
+    {
+        _offset = level % 10;
     }
 }

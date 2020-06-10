@@ -12,7 +12,6 @@ public static class BurgerComparer
 
         var ratables = comparable._ingridients.Select(ingridient => ingridient as IRatable).Where(ratable => ratable != null).ToArray();
         
-        Debug.Log(ratables.Length);
         
         if (comparable._ingridients.Count == original._ingridients.Count)
         {
@@ -22,7 +21,6 @@ public static class BurgerComparer
                 
                 if (original._ingridients[i].GetType() == comparable._ingridients[i].GetType())
                 {
-                    Debug.Log(status);
                     if (comparableRatable != null)
                         status += (comparableRatable.GetRating() / ratables.Length);
                 }

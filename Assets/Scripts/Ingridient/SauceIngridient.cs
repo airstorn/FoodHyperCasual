@@ -6,14 +6,15 @@ using UnityEngine;
 public class SauceIngridient : MonoBehaviour, IIngridient, IEditable, IRatable
 {
     [SerializeField] private float _height = 0.01f;
+    [SerializeField] private GameObject _spawnable;
     public float GetHeight()
     {
         return _height;
     }
 
-    public ISpawnable GetSpawnable()
+    public GameObject GetObject()
     {
-        return null;
+        return _spawnable;
     }
 
     public Transform GetTransform()

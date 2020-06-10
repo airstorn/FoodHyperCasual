@@ -10,27 +10,27 @@ using Random = UnityEngine.Random;
 public class Spawner : MonoBehaviour
 {
    [SerializeField] private List<IngridientSpawnZoneBase> _spawnZones = new List<IngridientSpawnZoneBase>();
-   [SerializeField] private GameObject[] objs;
+   
    private List<ISpawnable> _schedule = new List<ISpawnable>();
+   private IIngridient[]_cash;
 
    public static Spawner Instance;
    private void Awake()
    {
       Instance = this;
+
+      _cash = Resources.LoadAll<GameObject>("Ingridients")
+         .Where(o => o.GetComponent<IIngridient>() != null)
+         .Select(o => o.GetComponent<IIngridient>())
+         .ToArray();
+      Debug.Log(_cash.Length);
    }
 
-   public IEnumerator SpawnElements(params ISpawnable[] ingridients)
+   public IEnumerator SpawnElements()
    {
-      _schedule =  objs.Select(el =>
-      {
-         var v = Instantiate(el);
-         
-         v.SetActive(false);
-         
-         return v.GetComponent<ISpawnable>();
-      }).ToList();
+      var ings = GameLogic.Instance.CustomerRequest.GetData()._ingridients;
       
-
+      
       for (int i = 0; i < _spawnZones.Count; i++)
       {
          _spawnZones[i].Spawn(_schedule[0]);
@@ -84,6 +84,11 @@ public class Spawner : MonoBehaviour
    private void OnDestroy()
    {
       GameLogic.Instance.PlayerBurger.IngridientAction -= PlaceScheduledIngridient;
+   }
+
+   private ISpawnable GetCashedObject<T>(T Type) where T : ISpawnable
+   {
+      return _cash.OfType<T>().First();
    }
 
    private Transform PlaceScheduledIngridient(IIngridient obj)

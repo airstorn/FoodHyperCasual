@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Ingridient;
 using UnityEngine;
 
-public class BottomBun : MonoBehaviour, IIngridient, IEditable
+public class BottomBun : MonoBehaviour, IIngridient, IEditable, ISpawnable
 {
     [SerializeField] private AnimationCurve _spawnCurve;
     [SerializeField] private float _height = 0.016f;
@@ -26,11 +26,24 @@ public class BottomBun : MonoBehaviour, IIngridient, IEditable
     {
         return _height;
     }
-    
+
+    public GameObject GetObject()
+    {
+        return gameObject;
+    }
+
     public Transform GetTransform()
     {
         return transform;
     }
 
-   
+
+    public void Spawn(Transform origin)
+    {
+    }
+
+    public void Despawn()
+    {
+        throw new NotImplementedException();
+    }
 }

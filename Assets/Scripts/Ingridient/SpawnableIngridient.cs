@@ -15,6 +15,11 @@ public class SpawnableIngridient : InputMovableBehaviour, IIngridient, ISpawnabl
         return _height;
     }
 
+    public GameObject GetObject()
+    {
+        return gameObject;
+    }
+
     public void Spawn(Transform origin)
     {
         transform.position = origin.position;
@@ -45,7 +50,6 @@ public class SpawnableIngridient : InputMovableBehaviour, IIngridient, ISpawnabl
         
          MovingUtility.LerpFloat(despawnAnim, DespawnAnimation, ()  => Destroy(gameObject));
     }
-    
     public virtual float GetRating()
     {
         return 1;

@@ -110,3 +110,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _height: 0.01
+  _spawnable: {fileID: 4417691684442133818, guid: d47380bb1f58e454289d1f8ae02f9a53,
+    type: 3}

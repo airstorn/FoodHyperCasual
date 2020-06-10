@@ -24,7 +24,6 @@ public class RatingPage : PageBasement
         _percentsText.text = 0 + "%";
         
         var f = float.Parse(args.ToString());
-        Debug.Log(f);
 
         StartCoroutine(AnimateRating(f));
         

@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Core;
 using UnityEngine;
 
 public class CustomerBurgerLoader : MonoBehaviour, IBurgerLoader
 {
-    
     
     public List<BurgerScriptableObject> GetBurgerList(CustomerRequestCreator.Difficulty difficulty)
     {

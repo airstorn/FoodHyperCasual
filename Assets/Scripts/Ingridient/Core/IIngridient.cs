@@ -5,5 +5,6 @@ namespace Ingridient
     public interface IIngridient
     {
         float GetHeight();
+        GameObject GetObject();
     }
 }

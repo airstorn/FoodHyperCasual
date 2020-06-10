@@ -21,11 +21,18 @@ public class UpperBun : MonoBehaviour, IIngridient, IEditable, ISpawnable
     {
         return _height;
     }
-    
+
+    public GameObject GetObject()
+    {
+        return gameObject;
+    }
+
     public Transform GetTransform()
     {
         return transform;
     }
+    
+    
 
     public void Spawn(Transform origin)
     {

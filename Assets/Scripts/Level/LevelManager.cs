@@ -18,13 +18,19 @@ public class LevelManager : MonoBehaviour
     private void Awake()
     {
         _handlers  = FindObjectsOfType<MonoBehaviour>().OfType<ILevelListener>().ToArray();
+        SetLevel(LoadLevel());
 
         foreach (var listener in _handlers)
         {
-            OnLevelChanged += listener.SetLevel;
+            Subscribe(listener);
         }
         
-        SetLevel(LoadLevel());
+    }
+
+    public void Subscribe<T>(T handler) where T : ILevelListener
+    {
+        OnLevelChanged += handler.SetLevel;
+        handler.SetLevel(CurrentLevel);
     }
 
     public void SetLevel(int level)

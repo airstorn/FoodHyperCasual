@@ -36,7 +36,7 @@ public class Customer : MonoBehaviour
     {
         var data = _customerBurger.GetData();
         RotateBurger(Quaternion.identity);
-        _creator.CreateRequest(ref data, CustomerRequestCreator.Difficulty.Easy);
+        _creator.CreateRequest(ref data);
     }
     
     public IEnumerator AnimateRequest()

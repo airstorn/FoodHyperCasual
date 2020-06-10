@@ -9,14 +9,17 @@ public class GameLogic : MonoBehaviour
     [SerializeField] private GameObject _playerBurgerObject;
     [SerializeField] private Spawner _spawner;
     [SerializeField] private bool _debug;
+    [SerializeField] private CustomerSpawner _customer;
 
     public Spawner IngridientSpawner => _spawner;
     public IBurgerViewable PlayerBurger => _playerBurger;
+    public IBurgerViewable CustomerRequest => _customerRequest;
     
     private IGameState[] _allStates;
     private IGameState _currentState;
 
     private IBurgerViewable _playerBurger;
+    private IBurgerViewable _customerRequest;
     
     public static GameLogic Instance;
 
@@ -28,6 +31,7 @@ public class GameLogic : MonoBehaviour
     private void Start()
     {
         _playerBurger = _playerBurgerObject.GetComponent<IBurgerViewable>();
+        _customerRequest = _customer.Customer.Burger;
         
         LoadStates();
 
