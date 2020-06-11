@@ -17,9 +17,9 @@ public class LevelManager : MonoBehaviour
     
     private void Awake()
     {
-        _handlers  = FindObjectsOfType<MonoBehaviour>().OfType<ILevelListener>().ToArray();
+        _handlers  = Resources.FindObjectsOfTypeAll<MonoBehaviour>().OfType<ILevelListener>().ToArray();
         SetLevel(LoadLevel());
-
+        
         foreach (var listener in _handlers)
         {
             Subscribe(listener);

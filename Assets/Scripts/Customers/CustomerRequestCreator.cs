@@ -31,6 +31,7 @@ public class CustomerRequestCreator : MonoBehaviour, ILevelListener
     {
 
         var burger = FillBurger(_difficultyPattern[_offset]);
+        Debug.Log(_difficultyPattern[_offset]);
 
         foreach (var ing in burger)
         {

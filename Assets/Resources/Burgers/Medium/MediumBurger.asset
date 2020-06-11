@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _burger:
   - {fileID: 3315265144826833324, guid: 50f2924e484e58442bc42a2ecb22e9be, type: 3}
+  - {fileID: 3558760078606335387, guid: c2a137057dbd8b8469faa3fdb0593600, type: 3}
   - {fileID: 3985782569148688113, guid: b75d12df92a28aa498c9c5a2a06056ed, type: 3}
+  - {fileID: 3558760078606335387, guid: 5402a4f7872a9114384fdb6459205f42, type: 3}
   - {fileID: 533939186828064384, guid: 8c00feaa1728a2e4c88e57caddbeb58b, type: 3}

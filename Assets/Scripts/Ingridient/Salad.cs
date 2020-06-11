@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Ingridient;
 using UnityEngine;
 
-public class Onion : SpawnableIngridient, IEditable
+public class Salad : SpawnableIngridient, IEditable
 {
     public Transform GetTransform()
     {

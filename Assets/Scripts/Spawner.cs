@@ -12,18 +12,11 @@ public class Spawner : MonoBehaviour
    [SerializeField] private List<IngridientSpawnZoneBase> _spawnZones = new List<IngridientSpawnZoneBase>();
    
    private List<ISpawnable> _schedule = new List<ISpawnable>();
-   private IIngridient[]_cash;
 
    public static Spawner Instance;
    private void Awake()
    {
       Instance = this;
-
-      _cash = Resources.LoadAll<GameObject>("Ingridients")
-         .Where(o => o.GetComponent<IIngridient>() != null)
-         .Select(o => o.GetComponent<IIngridient>())
-         .ToArray();
-      Debug.Log(_cash.Length);
    }
 
    public IEnumerator SpawnElements()
@@ -96,12 +89,6 @@ public class Spawner : MonoBehaviour
    private void OnDestroy()
    {
       GameLogic.Instance.PlayerBurger.IngridientAction -= PlaceScheduledIngridient;
-   }
-
-   private IIngridient GetCashedObject<T>(T Type) where T : IIngridient
-   {
-      Debug.Log(Type);
-      return _cash.OfType<T>().First();
    }
 
    private Transform PlaceScheduledIngridient(IIngridient obj)
