@@ -4,8 +4,54 @@
     <e p="C:\Users\mitic\.Rider2019.3\system\extResources" t="IncludeRecursive" />
     <e p="C:\Users\mitic\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_FoodHyperCasual.-237465251.00" t="ExcludeRecursive" />
     <e p="D:\Freelance\FoodHyperCasual" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
+        <e p="Adjust" t="Include">
+          <e p="3rd Party" t="Include">
+            <e p="SimpleJSON.cs" t="Include" />
+          </e>
+          <e p="Android" t="Include">
+            <e p="AdjustAndroid.cs" t="Include" />
+            <e p="AdjustAndroidManifest.xml" t="Include" />
+          </e>
+          <e p="Editor" t="Include">
+            <e p="AdjustEditor.cs" t="Include" />
+          </e>
+          <e p="ExampleGUI" t="Include">
+            <e p="ExampleGUI.cs" t="Include" />
+          </e>
+          <e p="iOS" t="Include">
+            <e p="AdjustiOS.cs" t="Include" />
+          </e>
+          <e p="Unity" t="Include">
+            <e p="Adjust.cs" t="Include" />
+            <e p="AdjustAppStoreSubscription.cs" t="Include" />
+            <e p="AdjustAttribution.cs" t="Include" />
+            <e p="AdjustConfig.cs" t="Include" />
+            <e p="AdjustEnvironment.cs" t="Include" />
+            <e p="AdjustEvent.cs" t="Include" />
+            <e p="AdjustEventFailure.cs" t="Include" />
+            <e p="AdjustEventSuccess.cs" t="Include" />
+            <e p="AdjustLogLevel.cs" t="Include" />
+            <e p="AdjustPlayStoreSubscription.cs" t="Include" />
+            <e p="AdjustSessionFailure.cs" t="Include" />
+            <e p="AdjustSessionSuccess.cs" t="Include" />
+            <e p="AdjustUtils.cs" t="Include" />
+          </e>
+          <e p="Windows" t="Include">
+            <e p="AdjustWindows.cs" t="Include" />
+          </e>
+        </e>
+        <e p="CrystalFramework" t="Include">
+          <e p="Utility" t="Include">
+            <e p="Demos" t="Include">
+              <e p="SafeAreaDemo.cs" t="Include" />
+              <e p="SafeAreaDemo.txt" t="Include" />
+            </e>
+            <e p="SafeArea.cs" t="Include" />
+          </e>
+        </e>
         <e p="FacebookSDK" t="Include">
           <e p="Examples" t="Include">
             <e p="Scripts" t="Include">
@@ -25,6 +71,16 @@
             </e>
           </e>
           <e p="link.xml" t="Include" />
+          <e p="Plugins" t="Include">
+            <e p="Editor" t="Include">
+              <e p="Dependencies.xml" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="PlayServicesResolver" t="Include">
+          <e p="Editor" t="Include">
+            <e p="play-services-resolver_v1.2.135.0.txt" t="Include" />
+          </e>
         </e>
         <e p="Scripts" t="Include">
           <e p="AimingAssets" t="Include">
