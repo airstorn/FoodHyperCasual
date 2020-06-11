@@ -98,6 +98,7 @@
             <e p="ZombieStateController.cs" t="Include" />
           </e>
           <e p="Analytics" t="Include">
+            <e p="AdjustExample.cs" t="Include" />
             <e p="FacebookManager.cs" t="Include" />
           </e>
           <e p="BurgerData.cs" t="Include" />

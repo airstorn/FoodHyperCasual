@@ -29,6 +29,7 @@ public class RatingPage : PageBasement
 
         _rating.fillAmount = 0;
         _percentsText.text = 0 + "%";
+        _moneyText.text = "+0";
         
         var f = float.Parse(args.ToString());
         var money = (f * 100) / 2;
