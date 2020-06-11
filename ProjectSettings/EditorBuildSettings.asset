@@ -5,7 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/FastFood_demo_01.unity
     guid: d2ced03b8f55a67449827fc613883dfb
+  - enabled: 1
+    path: Assets/Scenes/FastFood_demo_02.unity
+    guid: 9d0fb20bc7be37d4c8866423eb56cc8b
   m_configObjects: {}

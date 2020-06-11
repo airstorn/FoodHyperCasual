@@ -75,6 +75,7 @@ public class CookingZone : MonoBehaviour, IInteractableZone
         
         _cookable.SetParent(_cookingObjectParent);
         _cookable.localPosition = Vector3.zero;
+        _cookable.localRotation = Quaternion.identity;
         _steam.Play();
         
         while (elapsed < time && _cookable != null)

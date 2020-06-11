@@ -63,6 +63,7 @@
             <e p="EmptySpawnable.cs" t="Include" />
             <e p="IBurgerLoader.cs" t="Include" />
             <e p="ILevelListener.cs" t="Include" />
+            <e p="IMoneyListener.cs" t="Include" />
             <e p="MovingUtility.cs" t="Include" />
             <e p="PressPlay.cs" t="Include" />
           </e>
@@ -145,6 +146,10 @@
               <e p="GamePage.cs" t="Include" />
               <e p="RatingPage.cs" t="Include" />
             </e>
+          </e>
+          <e p="Money" t="Include">
+            <e p="MoneyDisplay.cs" t="Include" />
+            <e p="MoneyHolder.cs" t="Include" />
           </e>
           <e p="PlayerBurger.cs" t="Include" />
           <e p="Rating" t="Include">
