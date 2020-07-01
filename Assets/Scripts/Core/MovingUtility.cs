@@ -27,10 +27,10 @@ public static class MovingUtility
         public float Duration;
     }
 
-    public static Coroutine MoveTo(MovingContainer data, Action<Vector3> callback)
+    public static Coroutine MoveTo(MovingContainer data, Action<Vector3> callback, Action endCallback = null)
     {
         CheckForObject();
-        return _routinesObject.StartCoroutine(MoveToRoutine(data, callback));
+        return _routinesObject.StartCoroutine(MoveToRoutine(data, callback, endCallback));
     }
     
     public static Coroutine Rotate(RotationContainer data, Action<Quaternion> callback)
@@ -53,7 +53,7 @@ public static class MovingUtility
         }
     }
 
-    private static IEnumerator MoveToRoutine(MovingContainer data, Action<Vector3> callback)
+    private static IEnumerator MoveToRoutine(MovingContainer data, Action<Vector3> callback, Action endCallback)
     {
         float elapsed = 0;
         while (elapsed < data.Duration)
@@ -68,6 +68,7 @@ public static class MovingUtility
 
         data.OriginPos = data.TargetPos;
         callback.Invoke(data.OriginPos);
+        endCallback?.Invoke();
     }
 
     private static IEnumerator RotateRoutine(RotationContainer data, Action<Quaternion> callback)

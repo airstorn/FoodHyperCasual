@@ -10,13 +10,15 @@ namespace GameStates
     {
         [SerializeField] private GameObject _playerBurgerObject;
         [SerializeField] private Spawner _ingridientsSpawner;
-        [SerializeField] private CustomerSpawner _customerData;
+        [SerializeField] private CustomerInteractor _customerInteractor;
         [SerializeField] private GameObject _firstBun;
         [SerializeField] private GameObject _secondBun;
         [SerializeField] private SelectableMover _mover;
-        [SerializeField] private PressPlay _playAction;
         [SerializeField] private GameObject _nextButton;
+        [SerializeField] private OrderPage _order;
 
+
+        private Customer _currentCustomer;
         
         public void Confirm()
         {
@@ -28,55 +30,89 @@ namespace GameStates
         public void Deactivate(Action callback)
         {
             _ingridientsSpawner.Clear();
+            
             GameLogic.Instance.PlayerBurger.GetData().OnIngridientAdded -= NextButtonUnlock;
-            _customerData.Customer.SetVisible(false);
+            
             callback?.Invoke();
+        }
+
+        private void Update()
+        {
         }
 
         public void Activate(Action activatAction)
         {
-            _playAction.Subscribe();
-            Menu.Instance.SwitchPage<MenuPage>(); 
             _nextButton.SetActive(false);
+
+            StartCoroutine(Game());
+            //
             
+            // StartCoroutine(CreateLevel(null));
+            activatAction?.Invoke();
+
             ClearPlayerBurger();
         }
+
+       
 
         private void NextButtonUnlock(IIngridient ingridient)
         {
             _nextButton.SetActive(true);
         }
 
-        private void OnPlay()
+        private void DeclineCustomer()
         {
-            StartCoroutine(Createlevel(null));
+            _customerInteractor.DeclineCustomer(_currentCustomer);
+            _customerInteractor.UpdateSchedule();
+            StartCoroutine(Game());
         }
 
-        private IEnumerator Createlevel(Action callback)
+        private void AcceptCustomer()
+        {
+            StartCoroutine(CreateLevel());
+            
+        }
+        
+        public IEnumerator Game()
+        {
+            yield return  StartCoroutine(_customerInteractor.PullCustomers(6));
+            yield return new WaitForSeconds(1.5f);
+            CreateOrder();
+        }
+
+    
+        private void CreateOrder()
+        {
+            _currentCustomer = _customerInteractor.GetFirstCustomer();
+            Menu.Instance.SwitchPage<OrderPage>();
+            _order.SetOrder(DeclineCustomer, AcceptCustomer);
+        }
+
+
+        private IEnumerator InviteCustomer()
+        {
+            yield return _currentCustomer.Presenter.Present(_currentCustomer);
+        }
+        
+        private IEnumerator CreateLevel()
         {
             _ingridientsSpawner.Clear();
             _mover.Unsubscribe();
             Menu.Instance.SwitchPage<GamePage>(); 
-
             
+
             PlaceBun(_firstBun);
             
             GameLogic.Instance.PlayerBurger.GetData().OnIngridientAdded += NextButtonUnlock;
-            
-            yield return StartCoroutine(_customerData.SpawnCustomer());
+
+            yield return InviteCustomer();
             
             yield return new WaitForSeconds(0.2f);
             
-            yield return _ingridientsSpawner.SpawnElements();
+            yield return _ingridientsSpawner.SpawnElements(_currentCustomer.Burger.GetData());
             
 
             _mover.Subscribe();
-            callback?.Invoke();
-        }
-
-        private void Start()
-        {
-            PressPlay.OnPlay += OnPlay;
         }
 
         private void OnValidate()

@@ -86,8 +86,8 @@ public class RatingState : MonoBehaviour, IGameState
         MovingUtility.MoveTo(cameraData, CameraMove);
         MovingUtility.Rotate(burgerRotData, BurgerRotation);
         
-        var rating = BurgerComparer.Compare(_customerSpawner.Customer.Burger.GetData(), _logic.PlayerBurger.GetData());
-        Menu.Instance.SwitchPage<RatingPage, float>(rating);
+        // var rating = BurgerComparer.Compare(_customerSpawner.Customer.Burger.GetData(), _logic.PlayerBurger.GetData());
+        // Menu.Instance.SwitchPage<RatingPage, float>(rating);
         
         yield return MovingUtility.MoveTo(burgerPosData, BurgerMove);
         

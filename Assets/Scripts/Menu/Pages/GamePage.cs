@@ -8,13 +8,6 @@ namespace GameStates
 {
     public class GamePage : PageBasement
     {
-        private void Start()
-        {
-            InputHandler.OnTouchMoved += CheckUI;
-        }
-
-        private void CheckUI(Vector3 obj)
-        {
-        }
+       
     }
 }

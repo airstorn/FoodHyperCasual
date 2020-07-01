@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Customers;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -13,17 +14,26 @@ public class Customer : MonoBehaviour
     [SerializeField] private Vector2 _size;
     [SerializeField] private GameObject[] _skins;
     public IBurgerViewable Burger => _customerBurger;
+    public ICustomerPresenter Presenter => _presenterAnimator;
 
     private GameObject _currentSkin;
+    private Animator _skinAnimator;
     private IBurgerViewable _customerBurger;
+    private ICustomerPresenter _presenterAnimator;
     private CustomerRequestCreator _creator;
-
+    
+    public enum CustomerAnimationType
+    {
+        Order,
+        MoveVertical
+    }
 
     public void SetRandomSkin()
     {
         int rand = Random.Range(0, _skins.Length);
         _currentSkin?.SetActive(false);
         _currentSkin = _skins[rand];
+        _skinAnimator = _currentSkin.GetComponent<Animator>();
         _currentSkin.SetActive(true);
     }
 
@@ -104,14 +114,24 @@ public class Customer : MonoBehaviour
         _burgerOffset.rotation = rot;
     }
     
-    public void SetVisible(bool visible)
+    public void SetAnimation(CustomerAnimationType type, bool state)
     {
-        _anim.SetBool("visible", visible);
+        switch (type)
+        {
+            case CustomerAnimationType.Order:
+                _anim.SetBool(type.ToString(), state);
+                break;
+            case CustomerAnimationType.MoveVertical:
+                Debug.Log(_skinAnimator);
+                _skinAnimator.SetFloat("MoveVertical", state == true ? 1 : 0);
+                break;
+        }
     }
     
     private void Awake()
     {
         _customerBurger = GetComponent<IBurgerViewable>();
         _creator = GetComponent<CustomerRequestCreator>();
+        _presenterAnimator = new CustomerPresenter();
     }
 }

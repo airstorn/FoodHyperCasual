@@ -19,10 +19,10 @@ public class Spawner : MonoBehaviour
       Instance = this;
    }
 
-   public IEnumerator SpawnElements()
+   public IEnumerator SpawnElements(BurgerData data)
    {
-      var ings = GameLogic.Instance.CustomerRequest.GetData()._ingridients;
-
+      var ings = data._ingridients;
+   
       var spawns = ings.Where(ingridient => ingridient.GetObject() != null).Select(ingridient => ingridient.GetObject()).ToList();
       
       spawns.ForEach(ingridient =>

@@ -14,14 +14,12 @@ public class GameLogic : MonoBehaviour
     public MoneyHolder MoneyData => _moneyHolder;
     public Spawner IngridientSpawner => _spawner;
     public IBurgerViewable PlayerBurger => _playerBurger;
-    public IBurgerViewable CustomerRequest => _customerRequest;
     
     private IGameState[] _allStates;
     private IGameState _currentState;
     private MoneyHolder _moneyHolder;
 
     private IBurgerViewable _playerBurger;
-    private IBurgerViewable _customerRequest;
     
     public static GameLogic Instance;
 
@@ -34,7 +32,6 @@ public class GameLogic : MonoBehaviour
     {
         _playerBurger = _playerBurgerObject.GetComponent<IBurgerViewable>();
         _moneyHolder = GetComponent<MoneyHolder>();
-        _customerRequest = _customer.Customer.Burger;
         
         LoadStates();
 
