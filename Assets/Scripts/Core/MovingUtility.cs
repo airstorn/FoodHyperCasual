@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.AccessControl;
 using UnityEngine;
 
 public static class MovingUtility
@@ -25,6 +26,11 @@ public static class MovingUtility
         public float StartValue;
         public float TargetValue;
         public float Duration;
+    }
+
+    public static void BreakRoutine(Coroutine coroutine)
+    {
+        _routinesObject.StopCoroutine(coroutine);
     }
 
     public static Coroutine MoveTo(MovingContainer data, Action<Vector3> callback, Action endCallback = null)

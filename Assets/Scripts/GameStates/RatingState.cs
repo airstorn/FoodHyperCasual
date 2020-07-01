@@ -3,17 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using GameStates;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class RatingState : MonoBehaviour, IGameState
 {
     [SerializeField] private GameLogic _logic;
-    [SerializeField] private CustomerSpawner _customerSpawner;
+    [SerializeField] private PlayState _game;
     [SerializeField] private GameObject _ui;
     [SerializeField] private ParticleSystem _particles;
     [SerializeField] private MovingRails _cameraMovement;
     [SerializeField] private MovingRails _burgerMovement;
 
-    private LevelManager _levelManager;
+    
+    public struct RatingData
+    {
+        public int MoneyIncome;
+        public float Score;
+    }
 
     [Serializable]
     public struct MovingRails
@@ -60,7 +66,6 @@ public class RatingState : MonoBehaviour, IGameState
 
     private IEnumerator AnimateActivate(Action activatAction)
     { 
-        _levelManager.SetLevel(_levelManager.CurrentLevel + 1);
         
         var cameraData = new MovingUtility.MovingContainer()
         {
@@ -86,8 +91,15 @@ public class RatingState : MonoBehaviour, IGameState
         MovingUtility.MoveTo(cameraData, CameraMove);
         MovingUtility.Rotate(burgerRotData, BurgerRotation);
         
-        // var rating = BurgerComparer.Compare(_customerSpawner.Customer.Burger.GetData(), _logic.PlayerBurger.GetData());
-        // Menu.Instance.SwitchPage<RatingPage, float>(rating);
+        var rating = BurgerComparer.Compare(_game.CurrentCustomer.Burger.GetData(), _logic.PlayerBurger.GetData());
+        
+        RatingData data = new RatingData()
+        {
+            Score = rating,
+            MoneyIncome = (int) (_game.CurrentCustomer.Request.Price * rating)
+        };
+        
+        Menu.Instance.SwitchPage<RatingPage, RatingData>(data);
         
         yield return MovingUtility.MoveTo(burgerPosData, BurgerMove);
         
@@ -111,8 +123,5 @@ public class RatingState : MonoBehaviour, IGameState
         _burgerMovement.Target.position = burgerPos;
     }
 
-    private void Start()
-    {
-        _levelManager = FindObjectOfType<LevelManager>();
-    }
+  
 }

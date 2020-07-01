@@ -27,7 +27,7 @@ public class CustomerRequestCreator : MonoBehaviour, ILevelListener
         FindObjectOfType<LevelManager>().Subscribe(this);
     }
 
-    public Customer.CustomerRequest CreateRequest(ref BurgerData data)
+    public Customer.CustomerRequest CreateRequest(ref BurgerData data, int scheduleNumber)
     {
         var burger = FillBurger(_difficultyPattern[_offset]);
 
@@ -40,7 +40,7 @@ public class CustomerRequestCreator : MonoBehaviour, ILevelListener
         Customer.CustomerRequest request = new Customer.CustomerRequest()
         {
             Burger = data,
-            Price = Random.Range(0, 50)
+            Price = CalcPrice(scheduleNumber)
         };
 
         return request;
@@ -74,5 +74,20 @@ public class CustomerRequestCreator : MonoBehaviour, ILevelListener
     public void SetLevel(int level)
     {
         _offset = level % 10;
+    }
+
+    private int CalcPrice(int schedulePosition)
+    {
+        switch (schedulePosition)
+        {
+            case 0:
+                return 10;
+            case 1:
+                return 15;
+            case 2:
+                return 50;
+            default:
+                return Random.Range(10, 50);
+        }
     }
 }

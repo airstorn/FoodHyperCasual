@@ -16,22 +16,17 @@ namespace GameStates
         [SerializeField] private GameObject _nextButton;
         [SerializeField] private OrderPage _order;
 
-        private Customer _currentCustomer;
+        public Customer CurrentCustomer => _currentCustomer;
         
-        public static void Confirm()
-        {
-            GameLogic.Instance.ChangeState<RatingState>();
-        }
+        private Customer _currentCustomer;
+        private bool _levelSpawned;
+     
         
         public void Deactivate(Action callback)
         {
             _ingridientsSpawner.Clear();
-            
+            _currentCustomer.SetAnimation(Customer.AnimationType.Order, false);
             callback?.Invoke();
-        }
-
-        private void Update()
-        {
         }
 
         public void Activate(Action activatAction)
@@ -49,8 +44,9 @@ namespace GameStates
 
         private void DeclineCustomer()
         {
-            _customerInteractor.DeclineCustomer(_currentCustomer);
-            StartCoroutine(OrderAnimation());
+            _customerInteractor.SendCustomerTo(_currentCustomer, CustomerInteractor.CustomerDirectionMove.Decline, CheckForLevelCompletion);
+            _currentCustomer = null;
+            StartCoroutine(FirstStart());
         }
 
         private void AcceptCustomer()
@@ -59,23 +55,46 @@ namespace GameStates
             
         }
         
+        public static void Confirm()
+        {
+            GameLogic.Instance.ChangeState<RatingState>();
+        }
+        
         private IEnumerator FirstStart()
         {
-            yield return  StartCoroutine(_customerInteractor.PullCustomers(6));
-            yield return new WaitForSeconds(1.5f);
-            CreateOrder();
+            if (_levelSpawned == false)
+            {
+                yield return  StartCoroutine(_customerInteractor.PullCustomers(6));
+                _levelSpawned = true;
+            }
+
+            if (_currentCustomer)
+            {
+                _customerInteractor.SendCustomerTo(_currentCustomer, CustomerInteractor.CustomerDirectionMove.Success, CheckForLevelCompletion);
+            }
+        
+            ProceedCustomer();
         }
 
-        private IEnumerator OrderAnimation()
+        private void CheckForLevelCompletion()
         {
-            yield return new WaitForSeconds(1.5f);
-            CreateOrder();
+            if(!_currentCustomer && _customerInteractor.CustomersCount == 0)
+                Debug.Log("Level Parsed");
+        }
+
+        private void ProceedCustomer()
+        {
+            _currentCustomer = _customerInteractor.GetFirstCustomer();
+
+            if (_currentCustomer)
+            {
+                _customerInteractor.SendCustomerTo(_currentCustomer, CustomerInteractor.CustomerDirectionMove.InteractionPoint, CreateOrder);
+            }
         }
 
     
         private void CreateOrder()
         {
-            _currentCustomer = _customerInteractor.GetFirstCustomer();
             Menu.Instance.SwitchPage<OrderPage>();
             _order.SetOrder(_currentCustomer.Request, DeclineCustomer, AcceptCustomer);
         }
@@ -91,7 +110,6 @@ namespace GameStates
             _ingridientsSpawner.Clear();
             _mover.Unsubscribe();
             Menu.Instance.SwitchPage<GamePage>(); 
-            
 
             PlaceBun(_firstBun);
             

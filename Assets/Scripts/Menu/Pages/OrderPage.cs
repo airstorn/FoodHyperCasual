@@ -22,6 +22,7 @@ public class OrderPage : PageBasement, IPointerDownHandler, IPointerUpHandler
     private bool _click;
     private Vector2 _origin;
     private Vector3 _clickPoint;
+    private Coroutine _animationRoutine;
     private MovingCorner _currentCorner;
     private bool _interactable = true;
 
@@ -54,6 +55,8 @@ public class OrderPage : PageBasement, IPointerDownHandler, IPointerUpHandler
 
     public override void Show<T>(T args)
     {
+        MovingUtility.BreakRoutine(_animationRoutine);
+        
         base.Show(args);
         _anim.SetTrigger("start");
         _interactable = true;
@@ -125,7 +128,7 @@ public class OrderPage : PageBasement, IPointerDownHandler, IPointerUpHandler
     {
         if (gameObject.activeInHierarchy)
         {
-            StartCoroutine(HideAnim(_currentCorner.Offset > 0));
+            _animationRoutine = StartCoroutine(HideAnim(_currentCorner.Offset > 0));
         }
     }
 
@@ -137,12 +140,13 @@ public class OrderPage : PageBasement, IPointerDownHandler, IPointerUpHandler
         _interactable = false;
         var move = new MovingUtility.MovingContainer()
         {
-            Duration = 1,
+            Duration = 0.8f,
             OriginPos = _orderObject.localPosition,
             TargetPos = direction 
         };
 
-        yield return MovingUtility.MoveTo(move, MoveOrder, DisablePage);
+        _animationRoutine = MovingUtility.MoveTo(move, MoveOrder, DisablePage);
+        yield return _animationRoutine;
     }
 
     private void DisablePage()

@@ -1,9 +1,7 @@
-﻿using DG.Tweening;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using DG.Tweening;
 
 public class CustomerSchedule : MonoBehaviour
 {
@@ -18,7 +16,6 @@ public class CustomerSchedule : MonoBehaviour
     private struct SchedulePoint
     {
         public Vector3 PointPosition;
-        private Tween _moveTween;
 
         public Customer Customer;
     }
@@ -76,8 +73,6 @@ public class CustomerSchedule : MonoBehaviour
                Customer = cache[i].Customer
             };
 
-
-            
             _schedulePoints.Add(point);
         }
 

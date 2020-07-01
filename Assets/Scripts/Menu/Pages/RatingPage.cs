@@ -14,6 +14,7 @@ public class RatingPage : PageBasement
     [SerializeField] private Button _continueButton;
     [SerializeField] private Text _percentsText;
     [SerializeField] private Text _moneyText;
+    
     struct RatingPayload
     {
         public float Percent;
@@ -30,19 +31,24 @@ public class RatingPage : PageBasement
         _rating.fillAmount = 0;
         _percentsText.text = 0 + "%";
         _moneyText.text = "+0";
-        
-        var f = float.Parse(args.ToString());
-        var money = (f * 100) / 2;
-        
-        GameLogic.Instance.MoneyData.AddMoney((int)money);
 
-        StartCoroutine(AnimateRating(f, money));
-        
+        if (args is RatingState.RatingData data)
+        {
+            var score = data.Score;
+            var money = data.MoneyIncome;
+
+            GameLogic.Instance.MoneyData.AddMoney(money);
+
+            StartCoroutine(AnimateRating(score, money));
+        }
+        else
+            StartCoroutine(AnimateRating(0, 0));
     }
 
     public void ContinueButton()
     {
          _logic.ChangeState<PlayState>();
+         Hide();
     }
 
     private IEnumerator AnimateRating(float rating, float money)
@@ -86,8 +92,6 @@ public class RatingPage : PageBasement
         _rating.fillAmount = obj;
         _percentsText.text = (int)(obj * 100) + "%";
     }
-
- 
 
     public override void Hide()
     {

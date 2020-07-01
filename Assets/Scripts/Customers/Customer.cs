@@ -18,6 +18,7 @@ public class Customer : MonoBehaviour
     public ICustomerPresenter Presenter => _presenterAnimator;
     public CustomerRequest Request => _request;
 
+   [SerializeField]  private int _scheduleNumber;
     private GameObject _currentSkin;
     private Animator _skinAnimator;
     private IBurgerViewable _customerBurger;
@@ -31,7 +32,7 @@ public class Customer : MonoBehaviour
         public int Price;
     }
     
-    public enum CustomerAnimationType
+    public enum AnimationType
     {
         Order,
         MoveVertical
@@ -51,11 +52,16 @@ public class Customer : MonoBehaviour
         _creator.ClearRequest(ref _customerBurger.GetData());
     }
 
+    public void SetScheduleNumber(int number)
+    {
+        _scheduleNumber = number;
+    }
+    
     public void CreateRequest()
     {
         var data = _customerBurger.GetData();
         RotateBurger(Quaternion.identity);
-        _request = _creator.CreateRequest(ref data);
+        _request = _creator.CreateRequest(ref data, _scheduleNumber);
     }
     
     public IEnumerator AnimateRequest()
@@ -119,31 +125,32 @@ public class Customer : MonoBehaviour
     }
 
     
-    public void SetAnimation(CustomerAnimationType type, bool state)
+    public void SetAnimation(AnimationType type, bool state)
     {
         switch (type)
         {
-            case CustomerAnimationType.Order:
+            case AnimationType.Order:
                 _anim.SetBool(type.ToString(), state);
                 break;
-            case CustomerAnimationType.MoveVertical:
+            case AnimationType.MoveVertical:
                 _skinAnimator.SetFloat("MoveVertical", state == true ? 1 : 0);
                 break;
         }
     }
 
-    public void MoveTo(Vector3 direction, Vector3 rotation, float duration)
+    public void MoveTo(Vector3 direction, Vector3 rotation, float duration, TweenCallback callback = null)
     {
         Sequence movingSequence = DOTween.Sequence();
         movingSequence.Append(transform.DOMove(direction, duration));
         movingSequence.Insert(0, transform.DORotate(rotation, duration));
         movingSequence.AppendCallback(MovingEnd);
-        SetAnimation(CustomerAnimationType.MoveVertical, true);
+        if(callback != null) movingSequence.AppendCallback(callback);
+        SetAnimation(AnimationType.MoveVertical, true);
     }
 
     private void MovingEnd()
     {
-        SetAnimation(CustomerAnimationType.MoveVertical, false);
+        SetAnimation(AnimationType.MoveVertical, false);
     }
 
     private void RotateBurger(Quaternion rot)

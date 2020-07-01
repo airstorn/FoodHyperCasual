@@ -7,7 +7,7 @@ namespace Customers
     {
         public IEnumerator Present(Customer customer)
         {
-                customer.SetAnimation(Customer.CustomerAnimationType.Order, true);
+                customer.SetAnimation(Customer.AnimationType.Order, true);
                 
                 yield return new WaitForSeconds(0.5f);
         

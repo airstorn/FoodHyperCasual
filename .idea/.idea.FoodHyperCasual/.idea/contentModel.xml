@@ -213,6 +213,7 @@
               <e p="CookingZone.cs" t="Include" />
               <e p="CookingZoneUI.cs" t="Include" />
             </e>
+            <e p="LevelEndState.cs" t="Include" />
             <e p="Menu.cs" t="Include" />
             <e p="MenuPage.cs" t="Include" />
             <e p="MenuState.cs" t="Include" />
