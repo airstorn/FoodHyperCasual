@@ -44,7 +44,7 @@ namespace GameStates
         {
             _nextButton.SetActive(false);
 
-            StartCoroutine(Game());
+            StartCoroutine(FirstStart());
             //
             
             // StartCoroutine(CreateLevel(null));
@@ -63,8 +63,7 @@ namespace GameStates
         private void DeclineCustomer()
         {
             _customerInteractor.DeclineCustomer(_currentCustomer);
-            _customerInteractor.UpdateSchedule();
-            StartCoroutine(Game());
+            StartCoroutine(OrderAnimation());
         }
 
         private void AcceptCustomer()
@@ -73,9 +72,15 @@ namespace GameStates
             
         }
         
-        public IEnumerator Game()
+        private IEnumerator FirstStart()
         {
             yield return  StartCoroutine(_customerInteractor.PullCustomers(6));
+            yield return new WaitForSeconds(1.5f);
+            CreateOrder();
+        }
+
+        private IEnumerator OrderAnimation()
+        {
             yield return new WaitForSeconds(1.5f);
             CreateOrder();
         }

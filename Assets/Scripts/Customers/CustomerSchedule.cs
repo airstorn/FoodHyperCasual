@@ -15,31 +15,30 @@ public class CustomerSchedule : MonoBehaviour
     public int Count => _schedulePoints.Count;
     
     [System.Serializable]
-    private class SchedulePoint
+    private struct SchedulePoint
     {
-        public Vector3 Pos;
-        [SerializeField] private Customer _customer;
+        public Vector3 PointPosition;
         private Tween _moveTween;
 
-        public Customer Customer
-        {
-            get
-            {
-                return _customer;
-            }
-            set
-            {
-                _customer = value;
-                if (value != null)
-                    _moveTween = _customer.transform.DOMove(Pos, 1);
-            }
-        }
+        public Customer Customer;
+        // {
+            // get
+            // {
+            //     return _customer;
+            // }
+            // set
+            // {
+            //     _customer = value;
+            //     if (value != null)
+            //         _moveTween = _customer.transform.DOMove(Pos, 1);
+            // }
+        // }
 
-        public void RemoveCustomer()
-        {
-            _moveTween.Kill();
-            _customer = null;
-        }
+        // public void RemoveCustomer()
+        // {
+        //     _moveTween.Kill();
+        //     Customer = null;
+        // }
 
     }
 
@@ -50,52 +49,77 @@ public class CustomerSchedule : MonoBehaviour
 
         var choosedElement = _schedulePoints.First().Customer;
 
-        _schedulePoints.First().RemoveCustomer();
-        // UpdateSchedule();
+        _schedulePoints.RemoveAt(0);
+        
+        UpdateSchedule();
+
         return choosedElement;
     }
 
     public void AddCustomer(Customer data)
     {
-        AddSchedulePoint();
-
-        SetUnit(data);
+        AddSchedulePoint(data);
     }
 
-    private void AddSchedulePoint()
+    private void AddSchedulePoint(Customer data)
     {
-        var position = _selectPoint.position + (_direction * _schedulePoints.Count);
+        var position = GetVacantPosition();
         
         var point = new SchedulePoint
         {
-            Pos = position
+            PointPosition = position,
+            Customer = data
         };
+        
+        data.transform.position = point.PointPosition;
         
         _schedulePoints.Add(point);
     }
 
+    private Vector3 GetVacantPosition()
+    {
+        return _selectPoint.position + (_direction * _schedulePoints.Count);
+    }
+
     public void UpdateSchedule()
     {
-        for (int i = 0; i < _schedulePoints.Count - 1; i++)
+        List<SchedulePoint> cache = new List<SchedulePoint>(_schedulePoints) ;
+
+        _schedulePoints.Clear();
+        
+        for (int i = 0; i < cache.Count; i++)
         {
-            if (!_schedulePoints[i].Customer && _schedulePoints[i + 1].Customer)
+            SchedulePoint point = new SchedulePoint()
             {
-                var point = _schedulePoints[i + 1];
-                _schedulePoints[i].Customer = point.Customer;
-                point.RemoveCustomer();
-            }
+               PointPosition = GetVacantPosition(),
+               Customer = cache[i].Customer
+            };
+
+            point.Customer.MoveTo(point.PointPosition, point.Customer.transform.rotation.eulerAngles, 1);
+
+            
+            _schedulePoints.Add(point);
         }
     }
 
     public void SetUnit(Customer unit)
     {
-        foreach (var t in _schedulePoints)
+        for (int i = 0; i < _schedulePoints.Count; i++)
         {
-            if (t.Customer) 
+            if(_schedulePoints[i].Customer)
                 continue;
             
-            t.Customer = unit;
+            // _schedulePoints[i].SetCustomer(unit);
             break;
         }
+        
+        // foreach (var t in _schedulePoints)
+        // {
+        //     if (t.Customer != null) 
+        //         continue;
+        //     
+        //     t.SetCustomer(unit);
+        //     break;
+        // }
     }
 }

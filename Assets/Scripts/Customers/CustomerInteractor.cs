@@ -21,21 +21,15 @@ public class CustomerInteractor : MonoBehaviour
     public Customer GetFirstCustomer()
     {
         var customer = _schedule.GetFirstUnit();
-        customer.transform.DOMove(_interactionPoint.position, 1);
-        return customer;
-    }
-
-    public void UpdateSchedule()
-    {
-        _schedule.UpdateSchedule();
         
+        customer.MoveTo(_interactionPoint.position, customer.transform.rotation.eulerAngles, 1);
+        
+        return customer;
     }
 
     public void DeclineCustomer(Customer customer)
     {
-        customer.transform.DORotate(new Vector3(0, 90, 0), 1f);
-        customer.transform.DOMove(_declinePoint.position, 2f);
-        customer.SetAnimation(Customer.CustomerAnimationType.MoveVertical, true);
+        customer.MoveTo(_declinePoint.position, new Vector3(0, 90, 0), 1);
     }
     
     public IEnumerator PullCustomers(int count)

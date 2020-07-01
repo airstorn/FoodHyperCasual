@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Customers;
+using DG.Tweening;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -109,10 +110,6 @@ public class Customer : MonoBehaviour
         }
     }
 
-    private void RotateBurger(Quaternion rot)
-    {
-        _burgerOffset.rotation = rot;
-    }
     
     public void SetAnimation(CustomerAnimationType type, bool state)
     {
@@ -122,10 +119,28 @@ public class Customer : MonoBehaviour
                 _anim.SetBool(type.ToString(), state);
                 break;
             case CustomerAnimationType.MoveVertical:
-                Debug.Log(_skinAnimator);
                 _skinAnimator.SetFloat("MoveVertical", state == true ? 1 : 0);
                 break;
         }
+    }
+
+    public void MoveTo(Vector3 direction, Vector3 rotation, float duration)
+    {
+        Sequence movingSequence = DOTween.Sequence();
+        movingSequence.Append(transform.DOMove(direction, duration));
+        movingSequence.Insert(0, transform.DORotate(rotation, duration));
+        movingSequence.AppendCallback(MovingEnd);
+        SetAnimation(CustomerAnimationType.MoveVertical, true);
+    }
+
+    private void MovingEnd()
+    {
+        SetAnimation(CustomerAnimationType.MoveVertical, false);
+    }
+
+    private void RotateBurger(Quaternion rot)
+    {
+        _burgerOffset.rotation = rot;
     }
     
     private void Awake()
