@@ -5,7 +5,7 @@ using Ingridient;
 using UnityEngine;
 
 public delegate Transform OnIngridientAdded(IIngridient ingridient);
-public interface IBurgerViewable
+public interface IBurgerViewable 
 {
     event OnIngridientAdded IngridientAction;
     ref BurgerData GetData();

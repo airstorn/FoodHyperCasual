@@ -29,7 +29,7 @@ public class CustomerInteractor : MonoBehaviour
 
     public void DeclineCustomer(Customer customer)
     {
-        customer.MoveTo(_declinePoint.position, new Vector3(0, 90, 0), 1);
+        customer.MoveTo(_declinePoint.position, new Vector3(0, 90, 0), 2);
     }
     
     public IEnumerator PullCustomers(int count)
@@ -40,7 +40,10 @@ public class CustomerInteractor : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             var customer = _spawner.CreateCustomer();
-            customer.SetRandomSkin();
+            customer.RandomizeSkin();
+            
+            customer.CreateRequest();
+            
             customer.SetAnimation(Customer.CustomerAnimationType.Order, false);
             _schedule.AddCustomer(customer);
             yield return null;

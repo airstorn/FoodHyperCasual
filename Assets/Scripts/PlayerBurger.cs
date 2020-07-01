@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using GameStates;
 using Ingridient;
 using UnityEngine;
 
@@ -47,6 +48,8 @@ public class PlayerBurger : MonoBehaviour, IBurgerViewable, IEditable
             t.GetTransform().position = vacantPos;
             t.GetTransform().gameObject.layer = 0;
             t.GetTransform().SetParent(transform);
+            
+            
         }
 
         IngridientAction?.Invoke(obj);
@@ -71,6 +74,11 @@ public class PlayerBurger : MonoBehaviour, IBurgerViewable, IEditable
         t.GetTransform().position = targetPos;
         t.GetTransform().gameObject.layer = 0;
         t.GetTransform().SetParent(transform);
+        
+        if (obj is UpperBun)
+        {
+            PlayState.Confirm();
+        }
     }
 
 

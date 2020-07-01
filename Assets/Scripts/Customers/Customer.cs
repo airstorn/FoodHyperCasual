@@ -16,12 +16,20 @@ public class Customer : MonoBehaviour
     [SerializeField] private GameObject[] _skins;
     public IBurgerViewable Burger => _customerBurger;
     public ICustomerPresenter Presenter => _presenterAnimator;
+    public CustomerRequest Request => _request;
 
     private GameObject _currentSkin;
     private Animator _skinAnimator;
     private IBurgerViewable _customerBurger;
     private ICustomerPresenter _presenterAnimator;
     private CustomerRequestCreator _creator;
+    private CustomerRequest _request;
+
+    public struct CustomerRequest
+    {
+        public BurgerData Burger;
+        public int Price;
+    }
     
     public enum CustomerAnimationType
     {
@@ -29,7 +37,7 @@ public class Customer : MonoBehaviour
         MoveVertical
     }
 
-    public void SetRandomSkin()
+    public void RandomizeSkin()
     {
         int rand = Random.Range(0, _skins.Length);
         _currentSkin?.SetActive(false);
@@ -43,11 +51,11 @@ public class Customer : MonoBehaviour
         _creator.ClearRequest(ref _customerBurger.GetData());
     }
 
-    public void CreateBurger()
+    public void CreateRequest()
     {
         var data = _customerBurger.GetData();
         RotateBurger(Quaternion.identity);
-        _creator.CreateRequest(ref data);
+        _request = _creator.CreateRequest(ref data);
     }
     
     public IEnumerator AnimateRequest()

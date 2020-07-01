@@ -27,9 +27,8 @@ public class CustomerRequestCreator : MonoBehaviour, ILevelListener
         FindObjectOfType<LevelManager>().Subscribe(this);
     }
 
-    public void CreateRequest(ref BurgerData data)
+    public Customer.CustomerRequest CreateRequest(ref BurgerData data)
     {
-
         var burger = FillBurger(_difficultyPattern[_offset]);
 
         foreach (var ing in burger)
@@ -37,6 +36,14 @@ public class CustomerRequestCreator : MonoBehaviour, ILevelListener
             var spawnedIng = SpawnIngridient(ing);
             data.AddIngridient(spawnedIng);
         }
+        
+        Customer.CustomerRequest request = new Customer.CustomerRequest()
+        {
+            Burger = data,
+            Price = Random.Range(0, 50)
+        };
+
+        return request;
     }
 
     public void ClearRequest(ref BurgerData data)

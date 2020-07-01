@@ -21,25 +21,6 @@ public class CustomerSchedule : MonoBehaviour
         private Tween _moveTween;
 
         public Customer Customer;
-        // {
-            // get
-            // {
-            //     return _customer;
-            // }
-            // set
-            // {
-            //     _customer = value;
-            //     if (value != null)
-            //         _moveTween = _customer.transform.DOMove(Pos, 1);
-            // }
-        // }
-
-        // public void RemoveCustomer()
-        // {
-        //     _moveTween.Kill();
-        //     Customer = null;
-        // }
-
     }
 
     public Customer GetFirstUnit()
@@ -51,7 +32,7 @@ public class CustomerSchedule : MonoBehaviour
 
         _schedulePoints.RemoveAt(0);
         
-        UpdateSchedule();
+        StartCoroutine(UpdateSchedule());
 
         return choosedElement;
     }
@@ -81,7 +62,7 @@ public class CustomerSchedule : MonoBehaviour
         return _selectPoint.position + (_direction * _schedulePoints.Count);
     }
 
-    public void UpdateSchedule()
+    public IEnumerator UpdateSchedule()
     {
         List<SchedulePoint> cache = new List<SchedulePoint>(_schedulePoints) ;
 
@@ -95,10 +76,17 @@ public class CustomerSchedule : MonoBehaviour
                Customer = cache[i].Customer
             };
 
-            point.Customer.MoveTo(point.PointPosition, point.Customer.transform.rotation.eulerAngles, 1);
 
             
             _schedulePoints.Add(point);
+        }
+
+        for (int i = 0; i < _schedulePoints.Count; i++)
+        {
+            var point =  _schedulePoints[i];
+            point.Customer.MoveTo(point.PointPosition, point.Customer.transform.rotation.eulerAngles, 1);
+
+            yield return new WaitForSeconds(0.2f);
         }
     }
 

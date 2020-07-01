@@ -12,26 +12,20 @@ namespace GameStates
         [SerializeField] private Spawner _ingridientsSpawner;
         [SerializeField] private CustomerInteractor _customerInteractor;
         [SerializeField] private GameObject _firstBun;
-        [SerializeField] private GameObject _secondBun;
         [SerializeField] private SelectableMover _mover;
         [SerializeField] private GameObject _nextButton;
         [SerializeField] private OrderPage _order;
 
-
         private Customer _currentCustomer;
         
-        public void Confirm()
+        public static void Confirm()
         {
-            PlaceBun(_secondBun);
-            
             GameLogic.Instance.ChangeState<RatingState>();
         }
         
         public void Deactivate(Action callback)
         {
             _ingridientsSpawner.Clear();
-            
-            GameLogic.Instance.PlayerBurger.GetData().OnIngridientAdded -= NextButtonUnlock;
             
             callback?.Invoke();
         }
@@ -51,13 +45,6 @@ namespace GameStates
             activatAction?.Invoke();
 
             ClearPlayerBurger();
-        }
-
-       
-
-        private void NextButtonUnlock(IIngridient ingridient)
-        {
-            _nextButton.SetActive(true);
         }
 
         private void DeclineCustomer()
@@ -90,7 +77,7 @@ namespace GameStates
         {
             _currentCustomer = _customerInteractor.GetFirstCustomer();
             Menu.Instance.SwitchPage<OrderPage>();
-            _order.SetOrder(DeclineCustomer, AcceptCustomer);
+            _order.SetOrder(_currentCustomer.Request, DeclineCustomer, AcceptCustomer);
         }
 
 
@@ -108,8 +95,6 @@ namespace GameStates
 
             PlaceBun(_firstBun);
             
-            GameLogic.Instance.PlayerBurger.GetData().OnIngridientAdded += NextButtonUnlock;
-
             yield return InviteCustomer();
             
             yield return new WaitForSeconds(0.2f);

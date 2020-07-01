@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Ingridient;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -9,9 +10,13 @@ using UnityEngine.UI;
 public class OrderPage : PageBasement, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField] private RectTransform _orderObject;
+    [SerializeField] private Text _priceText;
     [SerializeField] private Text _orderMessage;
     [SerializeField] private MovingCorner[] _corners = new MovingCorner[3];
+    [SerializeField] private Transform _burgerPreviewer;
 
+    private IBurgerViewable _previewer;
+    
     private Animator _anim;
     private Image _orderImage;
     private bool _click;
@@ -35,6 +40,7 @@ public class OrderPage : PageBasement, IPointerDownHandler, IPointerUpHandler
         _origin = _orderObject.localPosition;
         _orderImage = _orderObject.GetComponent<Image>();
         _anim = _orderObject.GetComponent<Animator>();
+        _previewer = GetComponent<IBurgerViewable>();
 
         _corners[0].OnObjectHoverMessage += DisplayHeader;
         _corners[1].OnObjectHoverMessage += DisplayHeader;
@@ -74,18 +80,45 @@ public class OrderPage : PageBasement, IPointerDownHandler, IPointerUpHandler
         _currentCorner.OnObjectInCorner?.Invoke();
     }
 
-    public void SetOrder(Action decline = null, Action accept = null)
+    public void SetOrder(Customer.CustomerRequest request, Action decline = null, Action accept = null)
     {
         _orderObject.gameObject.SetActive(true);
 
+        ClearPreviewer();
+        
         _orderObject.localPosition = _origin;
         _orderImage.color = _corners[1].Color;
+
+        foreach (var ingridient in request.Burger._ingridients)
+        {
+            if (ingridient is IEditable editable)
+            {
+                var obj = Instantiate(editable.GetTransform().gameObject);
+                _previewer.GetData().AddIngridient(obj.GetComponent<IIngridient>());
+            }
+        }
+
+        _priceText.text = request.Price + "$";
         
         _corners[0].OnObjectInCorner = decline;
         _corners[2].OnObjectInCorner = accept;
 
         _corners[0].OnObjectInCorner += Hide;
         _corners[2].OnObjectInCorner += Hide;
+    }
+
+    private void ClearPreviewer()
+    {
+        var data = _previewer.GetData();
+        for (int i = 0;  i <  data._ingridients.Count; i ++)
+        {
+            if (data._ingridients[i] is IEditable editable)
+            {
+                Destroy(editable.GetTransform().gameObject);
+            }
+        }
+        
+        data._ingridients.Clear();
     }
 
     public override void Hide()
