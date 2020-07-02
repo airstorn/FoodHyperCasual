@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Customers;
 using Ingridient;
 using UnityEngine;
 
 namespace GameStates
 {
-    public class PlayState : MonoBehaviour, IGameState
+    public partial class PlayState : MonoBehaviour, IGameState
     {
         [SerializeField] private GameObject _playerBurgerObject;
         [SerializeField] private Spawner _ingridientsSpawner;
@@ -20,12 +21,14 @@ namespace GameStates
         
         private Customer _currentCustomer;
         private bool _levelSpawned;
-     
+        
+      
         
         public void Deactivate(Action callback)
         {
             _ingridientsSpawner.Clear();
-            _currentCustomer.SetAnimation(Customer.AnimationType.Order, false);
+            
+            if(_currentCustomer) _currentCustomer.SetAnimation(Customer.AnimationType.Order, false);
             callback?.Invoke();
         }
 
@@ -34,9 +37,7 @@ namespace GameStates
             _nextButton.SetActive(false);
 
             StartCoroutine(FirstStart());
-            //
             
-            // StartCoroutine(CreateLevel(null));
             activatAction?.Invoke();
 
             ClearPlayerBurger();
@@ -52,7 +53,6 @@ namespace GameStates
         private void AcceptCustomer()
         {
             StartCoroutine(CreateLevel());
-            
         }
         
         public static void Confirm()
@@ -78,8 +78,11 @@ namespace GameStates
 
         private void CheckForLevelCompletion()
         {
-            if(!_currentCustomer && _customerInteractor.CustomersCount == 0)
-                Debug.Log("Level Parsed");
+            if (!_currentCustomer && _customerInteractor.CustomersCount == 0)
+            {
+                _levelSpawned = false;
+                GameLogic.Instance.ChangeState<LevelEndState>();
+            }
         }
 
         private void ProceedCustomer()

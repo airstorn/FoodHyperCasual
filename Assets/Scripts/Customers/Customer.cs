@@ -141,10 +141,11 @@ public class Customer : MonoBehaviour
     public void MoveTo(Vector3 direction, Vector3 rotation, float duration, TweenCallback callback = null)
     {
         Sequence movingSequence = DOTween.Sequence();
-        movingSequence.Append(transform.DOMove(direction, duration));
+        movingSequence.Append(transform.DOMove(direction, duration).SetEase(Ease.InQuad));
         movingSequence.Insert(0, transform.DORotate(rotation, duration));
         movingSequence.AppendCallback(MovingEnd);
         if(callback != null) movingSequence.AppendCallback(callback);
+        
         SetAnimation(AnimationType.MoveVertical, true);
     }
 

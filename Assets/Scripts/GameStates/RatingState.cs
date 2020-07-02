@@ -14,7 +14,6 @@ public class RatingState : MonoBehaviour, IGameState
     [SerializeField] private MovingRails _cameraMovement;
     [SerializeField] private MovingRails _burgerMovement;
 
-    
     public struct RatingData
     {
         public int MoneyIncome;
@@ -92,6 +91,9 @@ public class RatingState : MonoBehaviour, IGameState
         MovingUtility.Rotate(burgerRotData, BurgerRotation);
         
         var rating = BurgerComparer.Compare(_game.CurrentCustomer.Burger.GetData(), _logic.PlayerBurger.GetData());
+        
+        if(rating >= 0.5f)
+            LevelStatus.Instance.SetSuccessfulCustomers(LevelStatus.Instance.SuccessfulCustomers + 1);
         
         RatingData data = new RatingData()
         {

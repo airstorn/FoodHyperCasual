@@ -55,7 +55,7 @@ public class OrderPage : PageBasement, IPointerDownHandler, IPointerUpHandler
 
     public override void Show<T>(T args)
     {
-        MovingUtility.BreakRoutine(_animationRoutine);
+        if(_animationRoutine != null) MovingUtility.BreakRoutine(_animationRoutine);
         
         base.Show(args);
         _anim.SetTrigger("start");

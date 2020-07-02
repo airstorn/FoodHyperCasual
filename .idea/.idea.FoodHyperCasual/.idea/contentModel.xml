@@ -161,6 +161,9 @@
             <e p="GameLogic.cs" t="Include" />
             <e p="IGameState.cs" t="Include" />
             <e p="IMenuPagable.cs" t="Include" />
+            <e p="LevelEndState.cs" t="Include" />
+            <e p="LevelStatus.cs" t="Include" />
+            <e p="MenuState.cs" t="Include" />
             <e p="PlayState.cs" t="Include" />
             <e p="RatingState.cs" t="Include" />
           </e>
@@ -213,13 +216,12 @@
               <e p="CookingZone.cs" t="Include" />
               <e p="CookingZoneUI.cs" t="Include" />
             </e>
-            <e p="LevelEndState.cs" t="Include" />
             <e p="Menu.cs" t="Include" />
             <e p="MenuPage.cs" t="Include" />
-            <e p="MenuState.cs" t="Include" />
             <e p="PageBasement.cs" t="Include" />
             <e p="Pages" t="Include">
               <e p="GamePage.cs" t="Include" />
+              <e p="LevelEndPage.cs" t="Include" />
               <e p="OrderPage.cs" t="Include" />
               <e p="RatingPage.cs" t="Include" />
             </e>
